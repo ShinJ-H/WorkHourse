@@ -29,14 +29,14 @@ export default function Home() {
                             />
                             <div className="carousel-caption">
                                 <div className="container carousel-content">
-                                    <h6 className="h4 animated fadeInUp0" style={{color: "white"}}>
+                                    <h6 className="h4 animated fadeInUp0" style={{ color: "white" }}>
                                         Work Smarter with WorkHorse
                                     </h6>
                                     <h1 className="text-white display-1 mb-4 animated fadeInRight">
                                         An Innovative Work Management Solution
                                     </h1>
                                     <p className="mb-4 text-white fs-5 animated fadeInDown">
-                                        Manage your tasks efficiently with a smart and intuitive system. WorkHorse helps you organize, track, 
+                                        Manage your tasks efficiently with a smart and intuitive system. WorkHorse helps you organize, track,
                                         and complete your work on time while improving productivity and collaboration.
                                     </p>
                                     <Link to={'/'} className="me-2">
@@ -73,7 +73,7 @@ export default function Home() {
                                         Quality Task Management You Can Rely On
                                     </h1>
                                     <p className="mb-4 text-white fs-5 animated fadeInDown">
-                                        WorkHorse helps you streamline your tasks and manage workflows efficiently. 
+                                        WorkHorse helps you streamline your tasks and manage workflows efficiently.
                                         Stay organized, track progress, and achieve your goals with ease using a simple and powerful platform.
                                     </p>
                                     <Link to={'/'} className="me-2">
@@ -118,7 +118,7 @@ export default function Home() {
             </div>
             {/* Carousel End */}
             {/* Fact Start */}
-            <div className="container-fluid-fact py-5">
+            {/* <div className="container-fluid-fact py-5">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 wow fadeIn" data-wow-delay=".1s">
@@ -153,7 +153,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* Fact End */}
             {/* About Start */}
             <div className="container-fluid py-5 my-5">
@@ -191,14 +191,14 @@ export default function Home() {
                                 About WorkHorse: Innovative Task & Workflow Management
                             </h1>
                             <p>
-                                WorkHorse is designed to simplify task and workflow management for individuals and teams. 
-                                Our platform helps users organize tasks, set priorities, and track progress efficiently. 
-                                With a focus on productivity and ease of use, WorkHorse enables better collaboration and ensures that every task is completed on time. 
+                                WorkHorse is designed to simplify task and workflow management for individuals and teams.
+                                Our platform helps users organize tasks, set priorities, and track progress efficiently.
+                                With a focus on productivity and ease of use, WorkHorse enables better collaboration and ensures that every task is completed on time.
                                 We aim to provide a reliable solution that transforms the way you manage your daily work.
                             </p>
                             <p className="mb-4">
-                                WorkHorse provides a structured and efficient way to manage tasks and workflows. 
-                                It helps users stay organized, prioritize work, and maintain consistency in completing tasks. 
+                                WorkHorse provides a structured and efficient way to manage tasks and workflows.
+                                It helps users stay organized, prioritize work, and maintain consistency in completing tasks.
                                 With a user-friendly interface and smart features, it ensures a smooth and productive work experience.
                             </p>
                             <Link
@@ -231,8 +231,8 @@ export default function Home() {
                                         <i className="fa fa-code fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">Web Design</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -251,8 +251,8 @@ export default function Home() {
                                         <i className="fa fa-file-code fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">Web Development</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -271,8 +271,8 @@ export default function Home() {
                                         <i className="fa fa-external-link-alt fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">UI/UX Design</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -291,8 +291,8 @@ export default function Home() {
                                         <i className="fas fa-user-secret fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">Web Cecurity</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -311,8 +311,8 @@ export default function Home() {
                                         <i className="fa fa-envelope-open fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">Digital Marketing</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -331,8 +331,8 @@ export default function Home() {
                                         <i className="fas fa-laptop fa-7x mb-4 text-primary" />
                                         <h4 className="mb-3">Programming</h4>
                                         <p className="mb-4">
-                                            Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
-                                            interdum. Aliquam dolor eget urna ultricies tincidunt.
+                                            {/* Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut
+                                            interdum. Aliquam dolor eget urna ultricies tincidunt. */}
                                         </p>
                                         <Link
                                             to={'/'}
@@ -349,7 +349,7 @@ export default function Home() {
             </div>
             {/* Services End */}
             {/* Blog Start */}
-            <div className="container-fluid blog py-5 mb-5">
+            {/* <div className="container-fluid blog py-5 mb-5">
                 <div className="container">
                     <div
                         className="text-center mx-auto pb-5 wow fadeIn"
@@ -584,7 +584,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* Blog End */}
             {/* Contact Start */}
             <div className="container-fluid py-5 mb-5">
@@ -657,7 +657,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="row g-5">
-                            <div className="col-lg-6 wow fadeIn" data-wow-delay=".3s">
+                            {/* <div className="col-lg-6 wow fadeIn" data-wow-delay=".3s">
                                 <div className="p-4 p-md-5 h-100 rounded contact-map">
                                     <iframe
                                         className="rounded w-100 h-100"
@@ -668,17 +668,17 @@ export default function Home() {
                                         referrerPolicy="no-referrer-when-downgrade"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-lg-6 wow fadeIn" data-wow-delay=".5s">
                                 <div className="p-4 p-md-5 rounded contact-form">
-                                    <h4 className="mb-4">
+                                    {/* <h4 className="mb-4">
                                         Receive messages instantly with our PHP and Ajax contact form -
                                         available in the{" "}
                                         <Link href="https://htmlcodex.com/downloading/?item=2737">
                                             Pro Version
                                         </Link>{" "}
                                         only.
-                                    </h4>
+                                    </h4> */}
                                     <div className="mb-4">
                                         <input
                                             type="text"
@@ -724,6 +724,23 @@ export default function Home() {
                 </div>
             </div>
             {/* Contact End */}
+            {/* 🔥 Floating Chatbot Button */}
+            <Link to={'/chatbot'}>
+                <div className="fixed bottom-6 right-6 z-50">
+
+                    <div className="relative w-30 h-30">
+                        {/* Chatbot Image */}
+                        <img
+                            src="img/ChatBot.png"
+                            alt="Chatbot"
+                            className="w-full h-full rounded-full shadow-xl object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
+                        />
+                        {/* 🔴 Notification Dot */}
+                        <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </div>
+
+                </div>
+            </Link>
         </>
 
     )

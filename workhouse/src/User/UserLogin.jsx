@@ -35,11 +35,19 @@ export default function UserLogin() {
 
             setMessage(res.data.message);
 
-            // Optional: store user data
-            localStorage.setItem("token", res.data.token);
+            // STORE FULL USER OBJECT
+            localStorage.setItem("user", JSON.stringify({
+                token: res.data.token,
+                _id: res.data._id,
+                name: res.data.name,
+                email: res.data.email,
+                role: res.data.role,
+                avatar: res.data.avatar,
+            }));
+
             console.log("TOKEN:", res.data.token);
             setTimeout(() => {
-                nav("/userlog");
+                nav("/");
             }, 2000);
 
             // Clear form

@@ -9,7 +9,8 @@ export default function AdminHeader() {
                     <nav className="navbar navbar-dark navbar-expand py-0">
                         <Link to={'/'} className="navbar-brand">
                             <h1 className="text-white fw-bold d-block">
-                                Work<span className="text-secondary">House</span>{" "}
+                                <img src="/img/logo1.png" alt="Logo" className="h-10 w-auto float-start mr-5" />
+                                <img src="/img/logo2.png" alt="Logo" className="h-8 w-auto float-start mr-1"/>
                             </h1>
                         </Link>
                         <button type="button" className="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" >
@@ -23,13 +24,13 @@ export default function AdminHeader() {
                                 <Link to={'/admin'} className="nav-item nav-link active text-secondary" >
                                     Dashboard
                                 </Link>
-                                <Link to={'/aboutus'} className="nav-item nav-link">
-                                    About
+                                <Link to={'/admin/users'} className="nav-item nav-link">
+                                    Users
                                 </Link>
                                 <Link to={'/notes'} className="nav-item nav-link">
                                     Notes
                                 </Link>
-                                <Link to={'/tasks'} className="nav-item nav-link">
+                                <Link to={'/admin/assigntasks'} className="nav-item nav-link">
                                     Tasks
                                 </Link>
                                 <Link to={'/contactus'} className="nav-item nav-link">
@@ -38,7 +39,7 @@ export default function AdminHeader() {
                             </div>
                             <li style={{ position: "relative", left: "50px" }}>
                                 <Link to={"/adminlog"}>
-                                    <button className="btn btn-success w-75.1">Admin</button>
+                                    <button className="btn btn-success w-75.1">Logout</button>
                                 </Link>
                             </li>
                             <li style={{ position: "relative", left: "50px" }}>

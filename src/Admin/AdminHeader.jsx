@@ -9,7 +9,8 @@ export default function AdminHeader() {
                     <nav className="navbar navbar-dark navbar-expand py-0">
                         <Link to={'/'} className="navbar-brand">
                             <h1 className="text-white fw-bold d-block">
-                                Work<span className="text-secondary">House</span>{" "}
+                                {/* <img src="/img/logo1.png" alt="Logo" className="h-10 w-auto float-start mr-5" />
+                                <img src="/img/logo2.png" alt="Logo" className="h-8 w-auto float-start mr-1"/> */}
                             </h1>
                         </Link>
                         <button type="button" className="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" >

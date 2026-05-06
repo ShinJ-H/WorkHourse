@@ -16,6 +16,12 @@ import Notes from './User/Notes'
 import AdminMaster from './Admin/AdminMaster'
 import Register from './Authentication/Register'
 import Dashboard from './Admin/Dashboard'
+import AssignTasks from './Admin/AssignTasks'
+import Users from './Admin/Users'
+import ChatBot from './User/ChatBot'
+import Profile from './User/Profile'
+import AccountSettings from './User/AccountSettings'
+import Chat from './User/Chat'
 
 function App() {
   return (
@@ -32,12 +38,16 @@ function App() {
       <Route path='/managerlog' element={<ManagerLogin/>}/>
       <Route path='/userlog' element={<UserLogin/>}/>
       <Route path='/register' element={<Register/>}/>
+      <Route path='/chatbot' element={<ChatBot/>}/>
+      <Route path='/profile' element={<Profile/>}/>
+      <Route path='/account-settings' element={<AccountSettings/>}/>
+      <Route path='/chat' element={<Chat/>}/>
       </Route>
 
       <Route path='/admin' element={<AdminMaster />}>
       <Route path='/admin' element={<Dashboard/>}/>
-      {/* <Route path='/' element={<Home/>}/> */}
-      {/* <Route path='/' element={<Home/>}/> */}
+      <Route path='/admin/assigntasks' element={<AssignTasks/>}/>
+      <Route path='/admin/users' element={<Users/>}/>
       {/* <Route path='/' element={<Home/>}/> */}
       {/* <Route path='/' element={<Home/>}/> */}
       

@@ -16,11 +16,11 @@ export default function AdminFooter(){
                                     Work<span className="text-secondary">House</span>{" "}
                                 </h1>
                             </Link>
-                            <p className="mt-4 text-light">
+                            {/* <p className="mt-4 text-light">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
                                 facere delectus qui placeat inventore consectetur repellendus optio
                                 debitis.
-                            </p>
+                            </p> */}
                             <div className="d-flex workhouse-link">
                                 <Link
                                     to={'/'}
@@ -69,10 +69,10 @@ export default function AdminFooter(){
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Our Projects
                                 </Link>
-                                <Link to={'/'} className="mb-2 text-white">
+                                {/* <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Latest Blog
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -92,10 +92,10 @@ export default function AdminFooter(){
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Helps
                                 </Link>
-                                <Link to={'/'} className="mb-2 text-white">
+                                {/* <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     FQAs
-                                </Link>
+                                </Link> */}
                                 <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Contact
@@ -137,21 +137,12 @@ export default function AdminFooter(){
                             <span className="text-light">
                                 <Link to="#" className="text-secondary">
                                     <i className="fas fa-copyright text-secondary me-2" />
-                                    Your Site Name
+                                    WorkHouse
                                 </Link>
                                 , All right reserved.
                             </span>
                         </div>
-                        <div className="col-md-6 text-center text-md-end">
-                            {/*/*** The author’s attribution link must remain intact in the template. *** /*/}
-                            {/*/*** If you wish to remove this credit link, please purchase the Pro Version . *** /*/}
-                            <span className="text-light">
-                                Designed By{" "}
-                                <Link to="https://htmlcodex.com" className="text-secondary">
-                                    HTML Codex
-                                </Link>
-                            </span>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

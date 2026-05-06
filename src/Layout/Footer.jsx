@@ -69,10 +69,10 @@ export default function Footer() {
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Our Projects
                                 </Link>
-                                {/* <Link to={'/'} className="mb-2 text-white">
+                                <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Latest Blog
-                                </Link> */}
+                                </Link>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -92,10 +92,10 @@ export default function Footer() {
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Helps
                                 </Link>
-                                {/* <Link to={'/'} className="mb-2 text-white">
+                                <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     FQAs
-                                </Link> */}
+                                </Link>
                                 <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Contact
@@ -142,7 +142,16 @@ export default function Footer() {
                                 , All right reserved.
                             </span>
                         </div>
-                        
+                        <div className="col-md-6 text-center text-md-end">
+                            {/*/*** The author’s attribution link must remain intact in the template. *** /*/}
+                            {/*/*** If you wish to remove this credit link, please purchase the Pro Version . *** /*/}
+                            <span className="text-light">
+                                Designed By{" "}
+                                <Link to="" className="text-secondary">
+                                    Simranjit Kaur
+                                </Link>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
