@@ -13,7 +13,7 @@ import noteRoutes from "./routes/noteRoutes.js";
 import path from "path";
 // import fs from "fs";
 import http from "http";
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 
 dotenv.config();
 connectDB();
@@ -31,54 +31,46 @@ app.use(express.json());
 
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-    credentials: true
-  }
-});
-
 let users = {};
 
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+// io.on("connection", (socket) => {
+//   console.log("User connected:", socket.id);
 
-  // Join user
-  socket.on("join", (userId) => {
-    users[userId] = socket.id;
-  });
+//   // Join user
+//   socket.on("join", (userId) => {
+//     users[userId] = socket.id;
+//   });
 
-  // Send message
-  socket.on("sendMessage", ({ senderId, receiverId, message }) => {
-    const receiverSocket = users[receiverId];
+//   // Send message
+//   socket.on("sendMessage", ({ senderId, receiverId, message }) => {
+//     const receiverSocket = users[receiverId];
 
-    if (receiverSocket) {
-      io.to(receiverSocket).emit("receiveMessage", {
-        senderId,
-        message,
-      });
-    }
-  });
+//     if (receiverSocket) {
+//       io.to(receiverSocket).emit("receiveMessage", {
+//         senderId,
+//         message,
+//       });
+//     }
+//   });
 
-  socket.on("typing", ({ senderId, receiverId }) => {
-    const receiverSocket = users[receiverId];
+//   socket.on("typing", ({ senderId, receiverId }) => {
+//     const receiverSocket = users[receiverId];
 
-    if (receiverSocket) {
-      io.to(receiverSocket).emit("typing", senderId);
-    }
-  });
+//     if (receiverSocket) {
+//       io.to(receiverSocket).emit("typing", senderId);
+//     }
+//   });
 
-  // Disconnect
-  socket.on("disconnect", () => {
-    for (let userId in users) {
-      if (users[userId] === socket.id) {
-        delete users[userId];
-        break;
-      }
-    }
-  });
-});
+//   // Disconnect
+//   socket.on("disconnect", () => {
+//     for (let userId in users) {
+//       if (users[userId] === socket.id) {
+//         delete users[userId];
+//         break;
+//       }
+//     }
+//   });
+// });
 
 
 app.get("/uploads/:filename", (req, res) => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function AdminHeader() {
+export default function ManagerHeader() {
     return (
         <>
             {/* Navbar Start */}
@@ -21,16 +21,16 @@ export default function AdminHeader() {
                             id="navbarCollapse"
                         >
                             <div className="navbar-nav ms-auto mx-xl-auto p-0">
-                                <Link to={'/admin'} className="nav-item nav-link active text-secondary" >
+                                <Link to={'/manager'} className="nav-item nav-link active text-secondary" >
                                     Dashboard
                                 </Link>
-                                <Link to={'/admin/users'} className="nav-item nav-link">
+                                <Link to={'/manager/users'} className="nav-item nav-link">
                                     Users
                                 </Link>
                                 {/* <Link to={'/notes'} className="nav-item nav-link">
                                     Notes
                                 </Link> */}
-                                <Link to={'/admin/assigntasks'} className="nav-item nav-link">
+                                <Link to={'/manager/assigntasks'} className="nav-item nav-link">
                                     Tasks
                                 </Link>
                                 {/* <Link to={'/contactus'} className="nav-item nav-link">
@@ -38,7 +38,7 @@ export default function AdminHeader() {
                                 </Link> */}
                             </div>
                             <li style={{ position: "relative", left: "50px" }}>
-                                <Link to={"/adminlog"}>
+                                <Link to={"/managerlog"}>
                                     <button className="btn btn-success w-75.1">Logout</button>
                                 </Link>
                             </li>

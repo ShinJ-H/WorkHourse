@@ -134,23 +134,23 @@ export default function Footer() {
                     <hr className="text-light mt-5 mb-4" />
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start">
-                            <span className="text-light">
+                            {/* <span className="text-light">
                                 <Link to="#" className="text-secondary">
                                     <i className="fas fa-copyright text-secondary me-2" />
                                     WorkHouse
                                 </Link>
                                 , All right reserved.
-                            </span>
+                            </span> */}
                         </div>
                         <div className="col-md-6 text-center text-md-end">
                             {/*/*** The author’s attribution link must remain intact in the template. *** /*/}
                             {/*/*** If you wish to remove this credit link, please purchase the Pro Version . *** /*/}
-                            <span className="text-light">
+                            {/* <span className="text-light">
                                 Designed By{" "}
                                 <Link to="" className="text-secondary">
                                     Simranjit Kaur
                                 </Link>
-                            </span>
+                            </span> */}
                         </div>
                     </div>
                 </div>

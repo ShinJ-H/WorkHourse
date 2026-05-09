@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-export default function Footer() {
-    return (
+export default function ManagerFooter(){
+    return(
         <>
-            {/* Footer Start */}
+        {/* Footer Start */}
             <div
                 className="container-fluid footer bg-dark wow fadeIn"
                 data-wow-delay=".3s"
@@ -11,7 +11,7 @@ export default function Footer() {
                 <div className="container pt-5 pb-4">
                     <div className="row g-5">
                         <div className="col-lg-3 col-md-6">
-                            <Link to={'/'}>
+                            <Link to={'/manager'}>
                                 <h1 className="text-white fw-bold d-block">
                                     Work<span className="text-secondary">House</span>{" "}
                                 </h1>
@@ -69,10 +69,10 @@ export default function Footer() {
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Our Projects
                                 </Link>
-                                <Link to={'/'} className="mb-2 text-white">
+                                {/* <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Latest Blog
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -92,10 +92,10 @@ export default function Footer() {
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Helps
                                 </Link>
-                                <Link to={'/'} className="mb-2 text-white">
+                                {/* <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     FQAs
-                                </Link>
+                                </Link> */}
                                 <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Contact
@@ -134,23 +134,13 @@ export default function Footer() {
                     <hr className="text-light mt-5 mb-4" />
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start">
-                            {/* <span className="text-light">
+                            <span className="text-light">
                                 <Link to="#" className="text-secondary">
                                     <i className="fas fa-copyright text-secondary me-2" />
-                                    Your Site Name
+                                    WorkHouse
                                 </Link>
                                 , All right reserved.
-                            </span> */}
-                        </div>
-                        <div className="col-md-6 text-center text-md-end">
-                            {/*/*** The author’s attribution link must remain intact in the template. *** /*/}
-                            {/*/*** If you wish to remove this credit link, please purchase the Pro Version . *** /*/}
-                            {/* <span className="text-light">
-                                Designed By{" "}
-                                <Link to="https://htmlcodex.com" className="text-secondary">
-                                    HTML Codex
-                                </Link>
-                            </span> */}
+                            </span>
                         </div>
                         
                     </div>
@@ -158,6 +148,5 @@ export default function Footer() {
             </div>
             {/* Footer End */}
         </>
-
     )
 }
