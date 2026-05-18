@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(7);
 
+  const nav = useNavigate();
   // Fetch users
   const fetchUsers = async () => {
     try {
@@ -29,6 +31,28 @@ export default function Users() {
       console.log(err);
     }
   };
+
+  // CHANGE ROLE
+
+  // const changeRole = async (id, role) => {
+
+  //   try {
+
+  //     await axios.put(
+  //       `http://localhost:5000/api/users/changerole/${id}`,
+  //       { role }
+  //     );
+
+  //     fetchUsers();
+
+  //   }
+  //   catch (err) {
+
+  //     console.log(err);
+
+  //   }
+
+  // };
 
   // Search filter
   const filteredUsers = users.filter((user) =>
@@ -60,11 +84,12 @@ export default function Users() {
           </div>
         </div>
         {/* User List */}
-        <table className="table table-bordered" style={{borderColor: "black", position: "relative", top: "5px"}}>
+        <table className="table table-bordered" style={{ borderColor: "black", position: "relative", top: "5px" }}>
           <thead className="text-black text-center">
             <tr>
               <th>Name</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -74,10 +99,20 @@ export default function Users() {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
+                  <span
+                    className={`badge px-3 py-2 ${user.role === "Admin"
+                        ? "bg-danger"
+                        : user.role === "Manager"
+                          ? "bg-warning text-dark"
+                          : "bg-primary"
+                      }`}
+                  >
+                    {user.role}
+                  </span>
+                </td>
+                <td>
                   {/* Update */}
-                  <button className="btn btn-warning me-2" onClick={() => nav(`/edit-user/${user._id}`)}>
-                    Update
-                  </button>
+                  <button className="btn btn-warning me-2" onClick={() => nav(`/admin/edit-user/${user._id}`)}>Update</button>
 
                   {/* Delete */}
                   <button

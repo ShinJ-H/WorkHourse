@@ -16,11 +16,6 @@ export default function ManagerFooter(){
                                     Work<span className="text-secondary">House</span>{" "}
                                 </h1>
                             </Link>
-                            {/* <p className="mt-4 text-light">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                                facere delectus qui placeat inventore consectetur repellendus optio
-                                debitis.
-                            </p> */}
                             <div className="d-flex workhouse-link">
                                 <Link
                                     to={'/'}
@@ -69,10 +64,6 @@ export default function ManagerFooter(){
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Our Projects
                                 </Link>
-                                {/* <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
-                                    Latest Blog
-                                </Link> */}
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -92,42 +83,6 @@ export default function ManagerFooter(){
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Helps
                                 </Link>
-                                {/* <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
-                                    FQAs
-                                </Link> */}
-                                <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
-                                    Contact
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <Link to="#" className="h3 text-secondary">
-                                Contact Us
-                            </Link>
-                            <div className="text-white mt-4 d-flex flex-column contact-link">
-                                <Link
-                                    to="#"
-                                    className="pb-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-map-marker-alt text-secondary me-2" /> 123
-                                    Street, New York, USA
-                                </Link>
-                                <Link
-                                    to="#"
-                                    className="py-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-phone-alt text-secondary me-2" /> +123 456
-                                    7890
-                                </Link>
-                                <Link
-                                    to="#"
-                                    className="py-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-envelope text-secondary me-2" />{" "}
-                                    info@exmple.con
-                                </Link>
                             </div>
                         </div>
                     </div>
@@ -142,7 +97,6 @@ export default function ManagerFooter(){
                                 , All right reserved.
                             </span>
                         </div>
-                        
                     </div>
                 </div>
             </div>

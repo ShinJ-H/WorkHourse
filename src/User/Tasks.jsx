@@ -1,145 +1,3 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const Tasks = () => {
-//   const [tasks, setTasks] = useState([]);
-//   const [selectedImage, setSelectedImage] = useState(null);
-
-//   const fetchTasks = async () => {
-//     try {
-//       const res = await axios.get("http://localhost:5000/api/tasks");
-//       console.log("TASKS DATA:", res.data);
-//       setTasks(res.data);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchTasks();
-
-//     const interval = setInterval(fetchTasks, 3000);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   return (
-//     <div className="container-fluid blog py-5 my-5">
-//       <div className="container py-5">
-//         <div className="row g-5 justify-content-center">
-
-//           {tasks.length === 0 ? (
-//             <p>No Tasks Found</p>
-//           ) : (
-//             tasks.map((task) => {
-
-//               const taskId = task._id || task.id;
-
-//               return (
-//                 <div key={taskId} className="col-lg-6 col-xl-4">
-//                   <div className="blog-item position-relative bg-light rounded">
-
-//                     {/* ✅ SHOW IMAGE ONLY IF IT IS IMAGE */}
-//                     {task.file?.url &&
-//                       task.file.url.match(/\.(jpg|jpeg|png|webp)$/i) && (
-//                         <img
-//                           src={task.file.url}
-//                           className="w-100 rounded-top"
-//                           alt=""
-//                           style={{
-//                             height: "200px",
-//                             objectFit: "cover",
-//                             width: "100%",
-//                             cursor: "pointer"
-//                           }}
-//                           onClick={() => setSelectedImage(task.file.url)}
-//                         />
-//                       )}
-
-//                     {/* STATUS */}
-//                     <span
-//                       className="position-absolute px-4 py-3 bg-primary text-white rounded"
-//                       style={{ top: "-28px", right: 20 }}
-//                     >
-//                       {task.status}
-//                     </span>
-
-//                     {/* CONTENT */}
-//                     <div
-//                       className="blog-content text-center px-3"
-//                       style={{ marginTop: "-25px" }}
-//                     >
-//                       <h5>{task.title}</h5>
-//                       <p>{task.description}</p>
-
-//                       <small className="text-secondary d-block">
-//                         Priority: {task.priority}
-//                       </small>
-
-//                       <small className="text-secondary d-block">
-//                         Start: {new Date(task.startDate).toDateString()}
-//                       </small>
-
-//                       <small className="text-secondary d-block">
-//                         End: {new Date(task.endDate).toDateString()}
-//                       </small>
-
-//                       {/* FILE BUTTON FOR DOCUMENTS */}
-//                       {task.file?.url &&
-//                         !task.file.url.match(/\.(jpg|jpeg|png|webp)$/i) && (
-//                           <a
-//                             href={task.file.url}
-//                             target="_blank"
-//                             rel="noopener noreferrer"
-//                             className="btn btn-sm btn-primary mt-2"
-//                           >
-//                             Open File
-//                           </a>
-//                         )}
-//                     </div>
-
-//                     {/* FOOTER */}
-//                     <div className="blog-coment d-flex justify-content-between px-4 py-2 border bg-primary rounded-bottom">
-//                       <span className="text-white">
-//                         Priority: {task.priority}
-//                       </span>
-//                     </div>
-
-//                   </div>
-//                 </div>
-//               );
-//             })
-//           )}
-
-//         </div>
-//       </div>
-
-//       {/* IMAGE MODAL */}
-//       {selectedImage && (
-//         <div
-//           className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-[9999]"
-//           onClick={() => setSelectedImage(null)}
-//         >
-//           <span
-//             className="absolute top-5 right-8 text-white text-4xl cursor-pointer"
-//             onClick={() => setSelectedImage(null)}
-//           >
-//             &times;
-//           </span>
-
-//           <img
-//             src={selectedImage}
-//             alt="Preview"
-//             className="max-w-[90%] max-h-[90%] rounded-lg"
-//             onClick={(e) => e.stopPropagation()}
-//           />
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Tasks;
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -158,19 +16,30 @@ const Tasks = () => {
 
   useEffect(() => {
     fetchTasks();
+
     const interval = setInterval(fetchTasks, 3000);
+
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="container-fluid blog py-5 my-5">
-      <div className="container py-5">
-        <div className="row g-5 justify-content-center">
+    <div className="w-full py-10 md:py-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          {tasks.length === 0 ? (
-            <p>No Tasks Found</p>
-          ) : (
-            tasks.map((task) => {
+        {tasks.length === 0 ? (
+
+          <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-10">
+            <p className="text-base font-medium text-slate-700">
+              No Tasks Found
+            </p>
+          </div>
+
+        ) : (
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+            {tasks.map((task) => {
+
               const taskId = task._id || task.id;
 
               const isImage =
@@ -178,119 +47,127 @@ const Tasks = () => {
                 task.file.url.match(/\.(jpg|jpeg|png|webp)$/i);
 
               return (
-                <div key={taskId} className="col-lg-6 col-xl-4">
-                  
-                  {/* ✅ FIXED CARD STRUCTURE */}
-                  <div className="blog-item position-relative bg-light rounded h-100 d-flex flex-column">
+                <div
+                  key={taskId}
+                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                >
 
-                    {/* ✅ IMAGE / EMPTY SPACE */}
-                    <div
-                      style={{
-                        height: "200px",
-                        width: "100%",
-                        overflow: "hidden",
-                        background: "#f5f5f5",
-                        borderTopLeftRadius: "8px",
-                        borderTopRightRadius: "8px",
-                      }}
-                    >
-                      {isImage && (
-                        <img
-                          src={task.file.url}
-                          alt=""
-                          style={{
-                            height: "100%",
-                            width: "100%",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => setSelectedImage(task.file.url)}
-                        />
-                      )}
-                    </div>
+                  {/* IMAGE */}
+                  <div className="relative h-44 w-full bg-slate-100">
+
+                    {isImage ? (
+                      <img
+                        src={task.file.url}
+                        alt=""
+                        className="h-full w-full cursor-pointer object-cover"
+                        onClick={() =>
+                          setSelectedImage(task.file.url)
+                        }
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <div className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-center">
+                          <p className="text-sm font-semibold text-slate-700">
+                            Document
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
                     {/* STATUS */}
-                    <span
-                      className="position-absolute px-4 py-3 bg-primary text-white rounded"
-                      style={{ top: "-28px", right: 20 }}
-                    >
+                    <span className="absolute right-3 top-3 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">
                       {task.status}
                     </span>
 
-                    {/* CONTENT */}
-                    <div
-                      className="blog-content text-center px-3 flex-grow-1"
-                      style={{ marginTop: "-25px" }}
-                    >
-                      <h5>{task.title}</h5>
-                      <p>{task.description}</p>
+                  </div>
 
-                      <small className="text-secondary d-block">
-                        Priority: {task.priority}
-                      </small>
+                  {/* CONTENT */}
+                  <div className="p-4">
 
-                      <small className="text-secondary d-block">
-                        Start:{" "}
+                    {/* TITLE */}
+                    <h3 className="text-lg font-bold text-slate-800">
+                      {task.title}
+                    </h3>
+
+                    {/* DESCRIPTION */}
+                    <p className="mt-2 text-sm text-slate-600">
+                      {task.description}
+                    </p>
+
+                    {/* DETAILS */}
+                    <div className="mt-4 space-y-1 text-sm text-slate-600">
+
+                      <p>
+                        <span className="font-semibold">
+                          Priority:
+                        </span>{" "}
+                        {task.priority}
+                      </p>
+
+                      <p>
+                        <span className="font-semibold">
+                          Start:
+                        </span>{" "}
                         {task.startDate
                           ? new Date(task.startDate).toDateString()
                           : "N/A"}
-                      </small>
+                      </p>
 
-                      <small className="text-secondary d-block">
-                        End:{" "}
+                      <p>
+                        <span className="font-semibold">
+                          End:
+                        </span>{" "}
                         {task.endDate
                           ? new Date(task.endDate).toDateString()
                           : "N/A"}
-                      </small>
+                      </p>
 
-                      {/* ✅ DOCUMENT BUTTON */}
-                      {task.file?.url && !isImage && (
-                        <a
-                          href={task.file.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-sm btn-primary mt-2"
-                        >
-                          Open File
-                        </a>
-                      )}
                     </div>
 
-                    {/* FOOTER */}
-                    <div className="blog-coment d-flex justify-content-between px-4 py-2 border bg-primary rounded-bottom">
-                      <span className="text-white">
-                        Priority: {task.priority}
-                      </span>
-                    </div>
+                    {/* FILE BUTTON */}
+                    {task.file?.url && !isImage && (
+                      <a
+                        href={task.file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white"
+                      >
+                        Open File
+                      </a>
+                    )}
 
                   </div>
+
                 </div>
               );
-            })
-          )}
+            })}
 
-        </div>
+          </div>
+        )}
       </div>
 
       {/* IMAGE MODAL */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-[9999]"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <span
-            className="absolute top-5 right-8 text-white text-4xl cursor-pointer"
+
+          <button
+            type="button"
+            className="absolute right-6 top-6 text-4xl text-white"
             onClick={() => setSelectedImage(null)}
           >
             &times;
-          </span>
+          </button>
 
           <img
             src={selectedImage}
             alt="Preview"
-            className="max-w-[90%] max-h-[90%] rounded-lg"
+            className="max-h-[90vh] max-w-[90vw] rounded-lg"
             onClick={(e) => e.stopPropagation()}
           />
+
         </div>
       )}
     </div>

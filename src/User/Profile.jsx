@@ -35,13 +35,45 @@ export default function Profile() {
             setName(res.data.name || "");
             setEmail(res.data.email || "");
 
+            // Keep header in sync immediately after avatar/name updates
+            // (Header listens to `userChanged` and reads `localStorage.user`.)
+            try {
+                const stored = localStorage.getItem("user");
+                const parsed = stored ? JSON.parse(stored) : null;
+
+                if (parsed) {
+                    const updatedUser = {
+                        ...parsed,
+                        // Prefer the fresh values from profile endpoint
+                        name: res.data.name || parsed.name,
+                        email: res.data.email || parsed.email,
+                        role: res.data.role || parsed.role,
+                        // Backend avatar schema is { url, public_id }
+                        avatar: res.data.avatar ?? parsed.avatar,
+                        _id: res.data._id || parsed._id,
+                        token: parsed.token,
+                    };
+
+                    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+                    // Ensure Header refreshes immediately
+                    window.dispatchEvent(new Event("userChanged"));
+                    window.dispatchEvent(new Event("storage"));
+                }
+            } catch {
+                // ignore
+            }
+
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
     };
 
     useEffect(() => {
-        console.log("TOKEN:", getToken());
+        const token = getToken();
+        // Prevent calling protected API with missing/invalid token
+        if (!token) return;
+
         fetchProfile();
     }, []);
 

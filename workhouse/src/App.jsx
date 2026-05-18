@@ -22,38 +22,42 @@ import ChatBot from './User/ChatBot'
 import Profile from './User/Profile'
 import AccountSettings from './User/AccountSettings'
 import Chat from './User/Chat'
+import Projects from '../../src/Admin/Projects'
 
 function App() {
   return (
     <>
       <BrowserRouter>
-      <Routes>
-      <Route path='/' element={<Master/>}>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/aboutus' element={<AboutUS/>}/>
-      <Route path='/notes' element={<Notes/>}/>
-      <Route path='/tasks' element={<Tasks/>}/>
-      <Route path='/contactus' element={<ContactUs/>}/>
-      <Route path='/adminlog' element={<AdminLogin/>}/>
-      <Route path='/managerlog' element={<ManagerLogin/>}/>
-      <Route path='/userlog' element={<UserLogin/>}/>
-      <Route path='/register' element={<Register/>}/>
-      <Route path='/chatbot' element={<ChatBot/>}/>
-      <Route path='/profile' element={<Profile/>}/>
-      <Route path='/account-settings' element={<AccountSettings/>}/>
-      <Route path='/chat' element={<Chat/>}/>
-      </Route>
+        <Routes>
+          <Route path='/' element={<Master />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/aboutus' element={<AboutUS />} />
+            <Route path='/notes' element={<Notes />} />
+            <Route path='/tasks' element={<Tasks />} />
+            <Route path='/contactus' element={<ContactUs />} />
+            <Route path='/adminlog' element={<AdminLogin />} />
+            <Route path='/managerlog' element={<ManagerLogin />} />
+            <Route path='/userlog' element={<UserLogin />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/chatbot' element={<ChatBot />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/account-settings' element={<AccountSettings />} />
+            <Route path='/chat' element={<Chat />} />
+          </Route>
 
-      <Route path='/admin' element={<AdminMaster />}>
-      <Route path='/admin' element={<Dashboard/>}/>
-      <Route path='/admin/assigntasks' element={<AssignTasks/>}/>
-      <Route path='/admin/users' element={<Users/>}/>
-      {/* <Route path='/' element={<Home/>}/> */}
-      {/* <Route path='/' element={<Home/>}/> */}
-      
-      
-      </Route>
-      </Routes>
+          <Route path='/admin' element={<AdminMaster />}>
+            <Route path='/admin' element={<Dashboard />} />
+            <Route path='/admin/assigntasks' element={<AssignTasks />} />
+            <Route path='/admin/users' element={<Users />} />
+            <Route path="/admin/projects" element={<Projects />} />
+            <Route path="/admin/create-project" element={<CreateProjecs />} />
+            <Route path="/admin/project/:id" element={<ProjectDetails />} />
+            {/* <Route path='/' element={<Home/>}/> */}
+            {/* <Route path='/' element={<Home/>}/> */}
+
+
+          </Route>
+        </Routes>
       </BrowserRouter>
     </>
   )

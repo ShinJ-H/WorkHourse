@@ -27,15 +27,9 @@ export default function ManagerHeader() {
                                 <Link to={'/manager/users'} className="nav-item nav-link">
                                     Users
                                 </Link>
-                                {/* <Link to={'/notes'} className="nav-item nav-link">
-                                    Notes
-                                </Link> */}
                                 <Link to={'/manager/assigntasks'} className="nav-item nav-link">
                                     Tasks
                                 </Link>
-                                {/* <Link to={'/contactus'} className="nav-item nav-link">
-                                    Contact
-                                </Link> */}
                             </div>
                             <li style={{ position: "relative", left: "50px" }}>
                                 <Link to={"/managerlog"}>

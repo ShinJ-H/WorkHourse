@@ -1,105 +1,133 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+export default function Users() {
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
 
-export default function ManageUsers() {
-
-  const [chartData, setChartData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  // Fetch users (manager side)
+  const fetchUsers = async () => {
     try {
-
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      // Get users
-      const usersRes = await axios.get(
-        "http://localhost:5000/api/users",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Get tasks
-      const tasksRes = await axios.get(
-        "http://localhost:5000/api/tasks",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Graph data
-      const data = [
-        {
-          name: "Users",
-          count: usersRes.data.length,
+      const res = await axios.get("http://localhost:5000/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          name: "Tasks",
-          count: tasksRes.data.length,
-        },
-      ];
+      });
 
-      setChartData(data);
-
-    } catch (error) {
-      console.log(error);
+      // Admin side expects res.data to be an array
+      setUsers(res.data || []);
+    } catch (err) {
+      console.log(err);
     }
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter((user) =>
+    (user.email || "").toLowerCase().includes(search.toLowerCase())
+  );
+
+  const [visible, setVisible] = useState(7);
+
+  const visibleUsers = filteredUsers.slice(0, visible);
+
+  useEffect(() => {
+    // reset pagination when search changes
+    setVisible(7);
+  }, [search]);
+
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "400px",
-        background: "#fff",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-      }}
-    >
-      <h2 style={{ marginBottom: "20px" }}>
-        Users & Tasks Count
-      </h2>
+    <>
+      {/* Page Header Start */}
+      <div className="container-fluid page-header py-5">
+        <div className="container text-center py-5">
+          <h1 className="display-2 text-white mb-4 animated slideInDown">
+            Users
+          </h1>
+        </div>
+      </div>
+      {/* Page Header End */}
 
-      <ResponsiveContainer width="100%" height="90%">
-        <BarChart data={chartData}>
+      <div className="container py-5">
+        <div className="p-4 p-md-1 rounded contact-form">
+          {/* Search Bar */}
+          <div className="mb-4">
+            <input
+              className="form-control border-0 py-3"
+              type="text"
+              placeholder="Search by email..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              required
+            />
+          </div>
+        </div>
 
-          <CartesianGrid strokeDasharray="3 3" />
+        {/* User List */}
+        <table
+          className="table table-bordered"
+          style={{
+            borderColor: "black",
+            position: "relative",
+            top: "5px",
+          }}
+        >
+          <thead className="text-black text-center">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
 
-          <XAxis dataKey="name" />
+          <tbody className="text-center">
+            {visibleUsers.length > 0 ? (
+              visibleUsers.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <span
+                      className={`badge px-3 py-2 ${
+                        user.role === "Admin"
+                          ? "bg-danger"
+                          : user.role === "Manager"
+                            ? "bg-warning text-dark"
+                            : "bg-primary"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3} className="text-secondary">
+                  No users found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
-          <YAxis />
-
-          <Tooltip />
-
-          <Legend />
-
-          <Bar
-            dataKey="count"
-            fill="#3b82f6"
-            radius={[5, 5, 0, 0]}
-          />
-
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+        {/* Load More */}
+        {visible < filteredUsers.length && (
+          <div className="text-center">
+            <button
+              className="btn btn-primary"
+              onClick={() => setVisible(visible + 7)}
+            >
+              Load More
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
+

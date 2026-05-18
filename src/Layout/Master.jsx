@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
 import Footer from "./Footer";
+import RoleNavbar from "../Components/RoleNavbar";
 
 export default function Master(){
     return(
         <>
-        <Header/>
+        <RoleNavbar />
         <Outlet/>
         <Footer/>
         </>

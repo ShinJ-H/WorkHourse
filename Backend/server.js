@@ -10,10 +10,12 @@ import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
 import path from "path";
-// import fs from "fs";
+import fs from "fs";
 import http from "http";
-// import { Server } from "socket.io";
+import { Server } from "socket.io";
 
 dotenv.config();
 connectDB();
@@ -23,7 +25,7 @@ const app = express();
 // Middleware
 /* ---------------- CORS FIX (IMPORTANT) ---------------- */
 app.use(cors({
-  origin: "http://localhost:5173", // ✅ FIXED
+  origin: "http://localhost:5173",
   credentials: true
 }));
 
@@ -31,52 +33,109 @@ app.use(express.json());
 
 const server = http.createServer(app);
 
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
+});
+
 let users = {};
 
-// io.on("connection", (socket) => {
-//   console.log("User connected:", socket.id);
+io.on("connection", (socket) => {
 
-//   // Join user
-//   socket.on("join", (userId) => {
-//     users[userId] = socket.id;
-//   });
+  console.log("User connected:", socket.id);
 
-//   // Send message
-//   socket.on("sendMessage", ({ senderId, receiverId, message }) => {
-//     const receiverSocket = users[receiverId];
+  // USER JOIN
+  socket.on("join", (userId) => {
 
-//     if (receiverSocket) {
-//       io.to(receiverSocket).emit("receiveMessage", {
-//         senderId,
-//         message,
-//       });
-//     }
-//   });
+    users[userId] = socket.id;
 
-//   socket.on("typing", ({ senderId, receiverId }) => {
-//     const receiverSocket = users[receiverId];
+    // SEND ONLINE USERS TO EVERYONE
+    io.emit(
+      "onlineUsers",
+      Object.keys(users)
+    );
+  });
 
-//     if (receiverSocket) {
-//       io.to(receiverSocket).emit("typing", senderId);
-//     }
-//   });
+  // SEND MESSAGE
+  socket.on(
+    "sendMessage",
+    ({ senderId, receiverId, message }) => {
 
-//   // Disconnect
-//   socket.on("disconnect", () => {
-//     for (let userId in users) {
-//       if (users[userId] === socket.id) {
-//         delete users[userId];
-//         break;
-//       }
-//     }
-//   });
-// });
+      const receiverSocket =
+        users[receiverId];
+
+      if (receiverSocket) {
+
+        io.to(receiverSocket).emit(
+          "receiveMessage",
+          {
+            senderId,
+            receiverId,
+            message,
+          }
+        );
+      }
+    }
+  );
+
+  // TYPING
+  socket.on(
+    "typing",
+    ({ senderId, receiverId }) => {
+
+      const receiverSocket =
+        users[receiverId];
+
+      if (receiverSocket) {
+
+        io.to(receiverSocket).emit(
+          "typing",
+          senderId
+        );
+      }
+    }
+  );
+
+  // DISCONNECT
+  socket.on("disconnect", () => {
+
+    for (let userId in users) {
+
+      if (users[userId] === socket.id) {
+
+        delete users[userId];
+
+        break;
+      }
+    }
+
+    // UPDATE ONLINE USERS
+    io.emit(
+      "onlineUsers",
+      Object.keys(users)
+    );
+
+    console.log("User disconnected");
+  });
+});
 
 
 app.get("/uploads/:filename", (req, res) => {
-  const filePath = path.join(process.cwd(), "uploads", req.params.filename);
+  const filePath = path.join(
+    process.cwd(),
+    "uploads",
+    req.params.filename
+  );
 
-  res.sendFile(filePath); // ✅ browser decides how to open
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).json({
+      message: "File not found",
+    });
+  }
 });
 
 // Routes
@@ -88,6 +147,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/projects", projectRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

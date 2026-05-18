@@ -16,11 +16,6 @@ export default function Footer() {
                                     Work<span className="text-secondary">House</span>{" "}
                                 </h1>
                             </Link>
-                            {/* <p className="mt-4 text-light">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                                facere delectus qui placeat inventore consectetur repellendus optio
-                                debitis.
-                            </p> */}
                             <div className="d-flex workhouse-link">
                                 <Link
                                     to={'/'}
@@ -69,10 +64,6 @@ export default function Footer() {
                                     <i className="fas fa-angle-right text-secondary me-2" />
                                     Our Projects
                                 </Link>
-                                <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
-                                    Latest Blog
-                                </Link>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
@@ -94,39 +85,7 @@ export default function Footer() {
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
                                     <i className="fas fa-angle-right text-secondary me-2" />
-                                    FQAs
-                                </Link>
-                                <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
                                     Contact
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <Link to="#" className="h3 text-secondary">
-                                Contact Us
-                            </Link>
-                            <div className="text-white mt-4 d-flex flex-column contact-link">
-                                <Link
-                                    to="#"
-                                    className="pb-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-map-marker-alt text-secondary me-2" /> 123
-                                    Street, New York, USA
-                                </Link>
-                                <Link
-                                    to="#"
-                                    className="py-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-phone-alt text-secondary me-2" /> +123 456
-                                    7890
-                                </Link>
-                                <Link
-                                    to="#"
-                                    className="py-3 text-light border-bottom border-primary"
-                                >
-                                    <i className="fas fa-envelope text-secondary me-2" />{" "}
-                                    info@exmple.con
                                 </Link>
                             </div>
                         </div>
@@ -134,25 +93,14 @@ export default function Footer() {
                     <hr className="text-light mt-5 mb-4" />
                     <div className="row">
                         <div className="col-md-6 text-center text-md-start">
-                            {/* <span className="text-light">
+                            <span className="text-light">
                                 <Link to="#" className="text-secondary">
                                     <i className="fas fa-copyright text-secondary me-2" />
-                                    Your Site Name
+                                    WorkHouse
                                 </Link>
                                 , All right reserved.
-                            </span> */}
+                            </span>
                         </div>
-                        <div className="col-md-6 text-center text-md-end">
-                            {/*/*** The author’s attribution link must remain intact in the template. *** /*/}
-                            {/*/*** If you wish to remove this credit link, please purchase the Pro Version . *** /*/}
-                            {/* <span className="text-light">
-                                Designed By{" "}
-                                <Link to="https://htmlcodex.com" className="text-secondary">
-                                    HTML Codex
-                                </Link>
-                            </span> */}
-                        </div>
-                        
                     </div>
                 </div>
             </div>
