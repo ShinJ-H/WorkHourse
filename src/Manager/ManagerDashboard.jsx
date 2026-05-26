@@ -12,94 +12,118 @@ import {
   Legend,
 } from "recharts";
 
-export default function ManagerDashboard(){
-    const [chartData, setChartData] = useState([]);
-    
-      useEffect(() => {
-        fetchData();
-      }, []);
-    
-      const fetchData = async () => {
-        try {
-    
-          const token = JSON.parse(localStorage.getItem("user"))?.token;
-    
-          // Get users
-          const usersRes = await axios.get(
-            "http://localhost:5000/api/users",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-    
-          // Get tasks
-          const tasksRes = await axios.get(
-            "http://localhost:5000/api/tasks",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-    
-          // Graph data
-          const data = [
-            {
-              name: "Users",
-              count: usersRes.data.length,
-            },
-            {
-              name: "Tasks",
-              count: tasksRes.data.length,
-            },
-          ];
-    
-          setChartData(data);
-    
-        } catch (error) {
-          console.log(error);
+export default function ManagerDashboard() {
+  const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+      // Get users
+      const usersRes = await axios.get(
+        "http://localhost:5000/api/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      };
-    return(
-        <>
-        <div
-              style={{
-                width: "100%",
-                height: "400px",
-                background: "#fff",
-                padding: "20px",
-                borderRadius: "10px",
-                boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-              }}
-            >
-              <h2 style={{ marginBottom: "20px" }}>
-                Users & Tasks
-              </h2>
-        
-              <ResponsiveContainer width="100%" height="90%">
-                <BarChart data={chartData}>
-        
-                  <CartesianGrid strokeDasharray="3 3" />
-        
-                  <XAxis dataKey="name" />
-        
-                  <YAxis />
-        
-                  <Tooltip />
-        
-                  <Legend />
-        
-                  <Bar
-                    dataKey="count"
-                    fill="#3b82f6"
-                    radius={[5, 5, 0, 0]}
-                  />
-        
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-        </>
-    )
+      );
+
+      // Get tasks
+      const tasksRes = await axios.get(
+        "http://localhost:5000/api/tasks",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Get projects
+      const projectsRes = await axios.get(
+        "http://localhost:5000/api/projects",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Graph data
+      const data = [
+        {
+          name: "Users",
+          count: usersRes.data.length,
+        },
+        {
+          name: "Tasks",
+          count: tasksRes.data.length,
+        },
+        {
+          name: "Projects",
+          count: projectsRes.data.projects?.length || 0,
+        },
+      ];
+
+
+      setChartData(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <>
+      <div className="container-fluid page-header py-5">
+        <div className="container text-center py-5">
+          <h1 className="display-2 text-white">
+            Manager Dashboard
+          </h1>
+        </div>
+      </div>
+      <div
+        style={{
+          width: "100%",
+          height: "400px",
+          background: "#fff",
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2 style={{ marginBottom: "20px" }}>
+          Users & Tasks
+        </h2>
+
+        <ResponsiveContainer width="100%" height="90%">
+          <BarChart data={chartData}>
+
+            <CartesianGrid strokeDasharray="3 3" />
+
+            <XAxis dataKey="name" />
+
+            <YAxis />
+
+            <Tooltip />
+
+            <Legend />
+
+            <Bar
+              dataKey="count"
+              fill="#3b82f6"
+              radius={[5, 5, 0, 0]}
+            />
+
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  )
 }
+
+

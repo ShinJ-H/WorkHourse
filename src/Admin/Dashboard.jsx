@@ -13,8 +13,10 @@ export default function Dashboard() {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalManagers: 0,
-    totalTasks: 0
+    totalTasks: 0,
+    totalProjects: 0,
   });
+
 
   const [error, setError] = useState("");
 
@@ -41,16 +43,23 @@ export default function Dashboard() {
     };
 
     fetchStats();
+
+    // Refresh stats every 3 seconds so the dashboard updates immediately
+    const interval = setInterval(fetchStats, 3000);
+    return () => clearInterval(interval);
   }, []);
+
 
   // ✅ Pie Data
   const data = [
     { name: "Users", value: stats.totalUsers },
     { name: "Managers", value: stats.totalManagers },
-    { name: "Tasks", value: stats.totalTasks }
+    { name: "Tasks", value: stats.totalTasks },
+    { name: "Projects", value: stats.totalProjects },
   ];
 
-  const COLORS = ["#36A2EB", "#FF6384", "#4CAF50"];
+  const COLORS = ["#36A2EB", "#FF6384", "#4CAF50", "#8E44AD"];
+
 
   return (
     <>
@@ -99,3 +108,5 @@ export default function Dashboard() {
     </>
   );
 }
+
+

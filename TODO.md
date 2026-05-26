@@ -1,14 +1,7 @@
 # TODO
 
-## RoleNavbar simplification
-- [x] Inspect current `src/Components/RoleNavbar.jsx` content.
-- [x] Refactor `RoleNavbar.jsx` to simplify logic:
-  - [x] Replace complex localStorage read + event listeners with a simpler state init.
-  - [x] Extract avatar URL computation + avatar fallback handler.
-  - [x] Remove duplicated avatar fallback logic.
-  - [x] Extract small JSX helpers for nav links.
-  - [x] Keep all existing routes/paths unchanged.
-- [x] Run lint/build or dev start to ensure component renders and routes work.
-
-
+## Project status sync & role-based visibility
+- [ ] Fix backend `getProjectStatusStats` filtering for normal users (team array vs team: req.user._id).
+- [ ] Ensure user updates to project status cause Admin/Manager dashboards to refresh counts (already uses `projectUpdated` event; no backend change needed for counts).
+- [ ] (Optional hardening) Restrict project/task update endpoints so normal users can only update their assigned items; Admin/Manager can update all.
 

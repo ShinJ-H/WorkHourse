@@ -88,6 +88,7 @@ export default function RoleNavbar() {
                     <Link to={"/admin/assigntasks"} className="nav-item nav-link">Assign Tasks</Link>
                     <Link to={"/admin/users"} className="nav-item nav-link">Users</Link>
                     <Link to={"/admin/projects"} className="nav-link"> Projects </Link>
+                    {/* <Link to={"/admin/tasksprojects"} className="nav-link"> Tasks & Projects </Link> */}
                 </>
             );
         }
@@ -96,7 +97,10 @@ export default function RoleNavbar() {
             return (
                 <>
                     <Link to={"/manager"} className="nav-item nav-link">Dashboard</Link>
-                    <Link to={"/manager/users"} className="nav-item nav-link">Tasks</Link>
+                    <Link to={"/manager/users"} className="nav-item nav-link">Users</Link>
+                    <Link to={"/manager/assigntasks"} className="nav-item nav-link">Assign Tasks</Link>
+                    <Link to={"/manager/projects"} className="nav-item nav-link">Projects</Link>
+                    {/* <Link to={"/manager/managetasks"} className="nav-item nav-link">Manage Tasks</Link> */}
                 </>
             );
         }
@@ -239,15 +243,15 @@ export default function RoleNavbar() {
                                         {/* ROLE-BASED DASHBOARD LINK */}
                                         {user.role === "admin" && (
                                             <li>
-                                                <Link to={"/admin"} className="dropdown-item">
-                                                    <i className="fas fa-user-shield me-2 text-success"></i>Admin Dashboard
+                                                <Link to={"/admin/statustable"} className="dropdown-item">
+                                                    <i className="fas fa-user-shield me-2 text-success"></i>Status Dashboard
                                                 </Link>
                                             </li>
                                         )}
                                         {user.role === "Manager" && (
                                             <li>
-                                                <Link to={"/manager"} className="dropdown-item">
-                                                    <i className="fas fa-briefcase me-2 text-primary"></i>Manager Dashboard
+                                                <Link to={"/manager/statustable"} className="dropdown-item">
+                                                    <i className="fas fa-briefcase me-2 text-primary"></i>Status Dashboard
                                                 </Link>
                                             </li>
                                         )}

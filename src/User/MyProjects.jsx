@@ -1,150 +1,229 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import UpdateModal from "./UpdateModal";
+
+const formatDate = (d) => {
+  if (!d) return "N/A";
+  try {
+    return new Date(d).toDateString();
+  } catch {
+    return "N/A";
+  }
+};
 
 export default function MyProjects() {
-    const [projects, setProjects] = useState([]);
-    const user = JSON.parse(
-        localStorage.getItem("user")
-    );
-    const fetchProjects = async () => {
-        try {
-            const res = await axios.get(
-                `http://localhost:5000/api/projects/user/${user._id}`
-            );
-            setProjects(res.data.projects);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-    return (
-        <div className="container mt-4">
-            <h2 className="mb-4">
-                My Projects
-            </h2>
-            <div className="row">
-                {projects.length > 0 ? (
-                    projects.map((project) => (
-                        <div
-                            className="col-md-4 mb-4"
-                            key={project._id}
-                        >
-                            <div className="card shadow p-3 h-100">
-                                <h4>
-                                    {project.title}
-                                </h4>
-                                <p>
-                                    {project.description}
-                                </p>
-                                <p>
-                                    <strong>Status:</strong>{" "}
-                                    {project.status}
-                                </p>
-                                <p>
-                                    <strong>Start Date:</strong>{" "}
-                                    {project.startDate
-                                        ? new Date(
-                                            project.startDate
-                                        ).toLocaleDateString()
-                                        : "N/A"}
-                                </p>
-                                <p>
-                                    <strong>End Date:</strong>{" "}
-                                    {project.endDate
-                                        ? new Date(
-                                            project.endDate
-                                        ).toLocaleDateString()
-                                        : "N/A"}
-                                </p>
-                                {/* FILES */}
-                                <div className="mt-3">
-                                    <h6>
-                                        Files
-                                    </h6>
-                                    {project.files?.length ? (
-                                        <ul className="ps-3">
-                                            {project.files.map(
-                                                (f, idx) => {
-                                                    const isImage =
-                                                        f.mimeType?.startsWith(
-                                                            "image/"
-                                                        );
-                                                    return (
-                                                        <li key={idx} className="mb-2">
-                                                            {isImage ? (
-                                                                <div>
-                                                                    <div className="w-100 bg-light rounded overflow-hidden">
-                                                                        <img
-                                                                            src={f.url}
-                                                                            alt={
-                                                                                f.originalName ||
-                                                                                "Uploaded file"
-                                                                            }
-                                                                            className="w-100 h-48 object-cover"
-                                                                        />
-                                                                    </div>
-                                                                    <div className="mt-1">
-                                                                        <a
-                                                                            href={f.url}
-                                                                            target="_blank"
-                                                                            rel="noreferrer"
-                                                                            className="text-decoration-none"
-                                                                        >
-                                                                            {f.originalName ||
-                                                                                "View"}
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            ) : (
-                                                                <div>
-                                                                    <a
-                                                                        href={f.url}
-                                                                        target="_blank"
-                                                                        rel="noreferrer"
-                                                                        className="text-decoration-none"
-                                                                    >
-                                                                        {f.originalName ||
-                                                                            "File"}
-                                                                    </a>
-                                                                </div>
-                                                            )}
-                                                        </li>
-                                                    );
-                                                }
-                                            )}
-                                        </ul>
-                                    ) : (
-                                        <p className="text-secondary">
-                                            No files
-                                        </p>
-                                    )}
-                                </div>
-                                {/* TEAM */}
-                                <h6 className="mt-3">
-                                    Team Members
-                                </h6>
-                                <ul>
-                                    {project.team?.map(
-                                        (member) => (
-                                            <li
-                                                key={member._id}
-                                            >
-                                                {member.name}
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <h5>
-                        No Projects Assigned
-                    </h5>
-                )}
-            </div>
+  const [projects, setProjects] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const user = useMemo(() => {
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const fetchProjects = async () => {
+    if (!user?._id) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/projects/user/${user._id}`
+      );
+
+      setProjects(
+        Array.isArray(res.data?.projects) ? res.data.projects : []
+      );
+    } catch (error) {
+      console.log(error);
+      setProjects([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchProjects();
+    const interval = setInterval(fetchProjects, 3000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?._id]);
+
+  return (
+    <div className="w-full py-10 md:py-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-slate-900">My Projects</h2>
+          <p className="mt-1 text-sm text-slate-600">View project details and update status.</p>
         </div>
-    );
+
+        {projects.length === 0 ? (
+          <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-10">
+            <p className="text-base font-medium text-slate-700">
+              No Projects Found
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => {
+              const projectId = project._id || project.id;
+              const currentMember = project.team?.find(
+                (m) => m.user?._id === user?._id
+              );
+              const memberStatus =
+                currentMember?.status || "Pending";
+              const files = Array.isArray(project.files) ? project.files : [];
+              const firstImageFile = files.find(
+                (f) => f?.mimeType?.startsWith("image/") && (f?.url || f?.path)
+              );
+
+              return (
+                <div
+                  key={projectId}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setSelectedItem(project);
+                    setModalOpen(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setSelectedItem(project);
+                      setModalOpen(true);
+                    }
+                  }}
+                  className="cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                >
+                  {/* MEDIA */}
+                  <div className="relative h-44 w-full bg-slate-100">
+                    {firstImageFile?.url ? (
+                      <img
+                        src={firstImageFile.url}
+                        alt="Project file preview"
+                        className="h-full w-full object-cover"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <div className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-center">
+                          <p className="text-sm font-semibold text-slate-700">
+                            Document
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STATUS */}
+                    <span
+                      className={`absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white ${memberStatus === "Completed"
+                        ? "bg-green-500"
+                        : memberStatus === "In Progress"
+                          ? "bg-yellow-500"
+                          : "bg-blue-500"
+                        }`}
+                    >
+                      {memberStatus}
+                    </span>
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-slate-800">
+                      {project.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm text-slate-600 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    <div className="mt-4 space-y-1 text-sm text-slate-600">
+                      <p>
+                        <span className="font-semibold">Start:</span>{" "}
+                        {formatDate(project.startDate)}
+                      </p>
+                      <p>
+                        <span className="font-semibold">End:</span>{" "}
+                        {formatDate(project.endDate)}
+                      </p>
+                    </div>
+
+                    {/* FILES */}
+                    <div className="mt-4">
+                      <p className="text-sm font-semibold text-slate-800">Files</p>
+
+                      {files.length ? (
+                        <div className="mt-2 space-y-2">
+                          {files
+                            .filter((f) => !f?.mimeType?.startsWith("image/"))
+                            .slice(0, 2)
+                            .map((f, idx) => (
+                              <a
+                                key={idx}
+                                href={f.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Open File
+                              </a>
+                            ))}
+
+                          {/* If only images exist, show a small note */}
+                          {files.filter((f) => f?.mimeType?.startsWith("image/")).length > 0 &&
+                            files.filter((f) => !f?.mimeType?.startsWith("image/")).length === 0 && (
+                              <p className="text-xs text-slate-500">Images attached</p>
+                            )}
+
+                          {/* If there are multiple files, show count */}
+                          {files.length > 2 && (
+                            <p className="text-xs text-slate-500">+{files.length - 2} more</p>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="mt-2 text-sm text-slate-500">No files</p>
+                      )}
+                    </div>
+
+                    {/* TEAM */}
+                    <div className="mt-4">
+                      <p className="text-sm font-semibold text-slate-800">Team Members</p>
+                      {Array.isArray(project.team) && project.team.length ? (
+                        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600">
+                          {project.team.slice(0, 3).map((member) => (
+                            <li key={member._id || member.id}>{member.name}</li>
+                          ))}
+                          {project.team.length > 3 && (
+                            <li className="text-xs text-slate-500">
+                              +{project.team.length - 3} more
+                            </li>
+                          )}
+                        </ul>
+                      ) : (
+                        <p className="mt-2 text-sm text-slate-500">No members</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <UpdateModal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedItem(null);
+        }}
+        mode="project"
+        item={selectedItem}
+      />
+    </div>
+  );
 }
+
+

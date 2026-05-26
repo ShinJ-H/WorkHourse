@@ -1,18 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import UpdateModal from "./UpdateModal";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const currentUser = useMemo(() => {
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  }, []);
+
   const fetchTasks = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/tasks");
-      setTasks(res.data);
+      setTasks(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const filteredTasks = useMemo(() => {
+    if (!currentUser?._id) return [];
+
+    return tasks.filter((task) => {
+      // Backend stores `user` field as a userId (not necessarily populated)
+      const assignedId = task?.user?._id || task?.userId || task?.user;
+      return assignedId && String(assignedId) === String(currentUser._id);
+    });
+  }, [tasks, currentUser?._id]);
+
 
   useEffect(() => {
     fetchTasks();
@@ -20,13 +44,15 @@ const Tasks = () => {
     const interval = setInterval(fetchTasks, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentUser?._id]);
+
 
   return (
+
     <div className="w-full py-10 md:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-        {tasks.length === 0 ? (
+        {filteredTasks.length === 0 ? (
 
           <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-10">
             <p className="text-base font-medium text-slate-700">
@@ -38,7 +64,8 @@ const Tasks = () => {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-            {tasks.map((task) => {
+            {filteredTasks.map((task) => {
+
 
               const taskId = task._id || task.id;
 
@@ -49,7 +76,19 @@ const Tasks = () => {
               return (
                 <div
                   key={taskId}
-                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    setSelectedItem(task);
+                    setModalOpen(true);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setSelectedItem(task);
+                      setModalOpen(true);
+                    }
+                  }}
+                  className="cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
                 >
 
                   {/* IMAGE */}
@@ -60,11 +99,12 @@ const Tasks = () => {
                         src={task.file.url}
                         alt=""
                         className="h-full w-full cursor-pointer object-cover"
-                        onClick={() =>
-                          setSelectedImage(task.file.url)
-                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedImage(task.file.url);
+                        }}
                       />
-                    ) : (
+                    ) : ( 
                       <div className="flex h-full items-center justify-center">
                         <div className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-center">
                           <p className="text-sm font-semibold text-slate-700">
@@ -170,6 +210,16 @@ const Tasks = () => {
 
         </div>
       )}
+
+      <UpdateModal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedItem(null);
+        }}
+        mode="task"
+        item={selectedItem}
+      />
     </div>
   );
 };

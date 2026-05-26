@@ -23,6 +23,11 @@ import MyProjects from './User/MyProjects'
 import EditUser from './Admin/EditUser'
 import ManagerMaster from './Manager/ManagerMaster'
 import ManagerDashboard from './Manager/ManagerDashboard'
+import ManagerAssignTasks from './Manager/ManagerAssignTasks'
+import ManagerProjects from './Manager/ManagerProjects'
+import AdminStatusTable from './Admin/AdminStatusTables'
+import ManagerStatusTable from './Manager/ManagerStatusTables'
+// import ManagerTasks from './Manager/ManagerTasks'
 
 function App() {
   return (
@@ -51,15 +56,21 @@ function App() {
           <Route path='/admin' element={<AdminMaster />}>
             <Route path='/admin' element={<Dashboard />} />
             <Route path='/admin/assigntasks' element={<AssignTasks />} />
+            <Route path='/admin/assigntasks/:id' element={<AssignTasks />} />
             <Route path='/admin/users' element={<Users />} />
             <Route path='/admin/projects' element={<Projects />} />
-            <Route path="/admin/edit-user/:id" element={<EditUser/>} />
+            <Route path='/admin/projects/:id' element={<Projects />} />
+            <Route path='/admin/edit-user/:id' element={<EditUser/>} />
+            <Route path='/admin/statustable' element={<AdminStatusTable/>} />
           </Route>
 
           {/* ── MANAGER ROUTES (uses same AdminMaster layout) ── */}
-          <Route path='/manager' element={<ManagerMaster />}>
+          <Route path='/manager' element={<ManagerMaster />}> 
             <Route path='/manager' element={<ManagerDashboard />} />
             <Route path='/manager/users' element={<ManagerUsers />} />
+            <Route path='/manager/assigntasks' element={<ManagerAssignTasks/>}/>
+            <Route path='/manager/projects' element={<ManagerProjects/>}/>
+            <Route path='/manager/statustable' element={<ManagerStatusTable/>}/>
           </Route>
 
         </Routes>

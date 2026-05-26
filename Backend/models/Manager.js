@@ -11,7 +11,11 @@ const managerSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true
-    }
+    },
+    role: {
+   type: String,
+   default: "Manager",
+},
   },
   { timestamps: true }
 );

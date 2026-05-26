@@ -1,3 +1,5 @@
+// Project.js
+
 import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema(
@@ -12,6 +14,12 @@ const projectSchema = new mongoose.Schema(
         },
 
         status: {
+            type: String,
+            enum: ["Pending", "In Progress", "Completed", "Overdue"],
+            default: "Pending",
+        },
+
+        priority: {
             type: String,
             enum: ["Low", "Medium", "High"],
             default: "Low",
@@ -43,8 +51,20 @@ const projectSchema = new mongoose.Schema(
 
         team: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "User",
+                },
+
+                status: {
+                    type: String,
+                    enum: ["Pending", "In Progress", "Completed"],
+                    default: "Pending",
+                },
+
+                completedAt: {
+                    type: Date,
+                },
             },
         ],
     },
