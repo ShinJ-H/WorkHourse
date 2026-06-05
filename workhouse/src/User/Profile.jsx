@@ -166,40 +166,6 @@ export default function Profile() {
                         }}
                     />
 
-                    {/* Settings */}
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.darkMode || false}
-                            onChange={(e) =>
-                                setUser({ ...user, darkMode: e.target.checked })
-                            }
-                        />
-                        Dark Mode
-                    </label>
-
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.emailNotifications || false}
-                            onChange={(e) =>
-                                setUser({ ...user, emailNotifications: e.target.checked })
-                            }
-                        />
-                        Email Notifications
-                    </label>
-
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.reminders || false}
-                            onChange={(e) =>
-                                setUser({ ...user, reminders: e.target.checked })
-                            }
-                        />
-                        Deadline Reminders
-                    </label>
-
                     <button className="w-full bg-blue-500 text-white py-2 rounded-lg">
                         Update Profile
                     </button>

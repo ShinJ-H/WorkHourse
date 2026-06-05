@@ -1,7 +1,11 @@
 # TODO
 
-## Project status sync & role-based visibility
-- [ ] Fix backend `getProjectStatusStats` filtering for normal users (team array vs team: req.user._id).
-- [ ] Ensure user updates to project status cause Admin/Manager dashboards to refresh counts (already uses `projectUpdated` event; no backend change needed for counts).
-- [ ] (Optional hardening) Restrict project/task update endpoints so normal users can only update their assigned items; Admin/Manager can update all.
+- [ ] Rewrite `src/User/Notes.jsx` using consistent Tailwind CSS styling.
+- [x] Fix Add Note form submission handler (currently incorrectly calls delete).
+- [x] Implement missing create handler (POST `/api/notes`) with optional image upload.
+- [ ] Improve UX: loading/disabled states for create/update/delete.
+- [ ] Ensure edit/save/cancel flow works with Tailwind UI.
+- [x] Keep image preview modal working.
+- [ ] Smoke-test via running the Vite app and verifying CRUD for notes.
+
 

@@ -2,63 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 export default function ChatBot() {
-    // const [data, setData] = useState([]);
-    // const [input, setInput] = useState("");
-    // const [loading, setLoading] = useState(false);
-
-    // // ✅ Load chat history when page loads
-    // useEffect(() => {
-    //     const savedChats = localStorage.getItem("chatHistory");
-    //     if (savedChats) {
-    //         setData(JSON.parse(savedChats));
-    //     }
-    // }, []);
-
-    // // ✅ Save chat history whenever it updates
-    // useEffect(() => {
-    //     localStorage.setItem("chatHistory", JSON.stringify(data));
-    // }, [data]);
-
-    // const handleChatBot = async () => {
-    //     if (!input.trim() || loading) return;
-
-    //     const updatedMessages = [...data, { text: input, sender: "user" }];
-    //     setData(updatedMessages);
-    //     setInput("");
-    //     setLoading(true);
-
-    //     try {
-    //         const res = await axios.post("http://localhost:5000/api/chat", {
-    //             messages: updatedMessages.map(m => m.text)
-    //         });
-
-    //         const botReply = res?.data?.reply || "No reply";
-
-    //         setData([
-    //             ...updatedMessages,
-    //             { text: botReply, sender: "bot" }
-    //         ]);
-
-    //     } catch (error) {
-    //         console.error("Frontend Error:", error);
-
-    //         let msg = "Something went wrong";
-
-    //         if (error?.response?.status === 429) {
-    //             msg = "Daily limit reached. Try again tomorrow.";
-    //         } else if (error?.response?.status === 503) {
-    //             msg = "Server busy. Try again.";
-    //         }
-
-    //         setData([
-    //             ...updatedMessages,
-    //             { text: msg, sender: "bot" }
-    //         ]);
-    //     }
-
-    //     setLoading(false);
-    // };
-
     const [chats, setChats] = useState([]);
     const [currentChatId, setCurrentChatId] = useState(null);
     const [input, setInput] = useState("");

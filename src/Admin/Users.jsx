@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -32,28 +32,6 @@ export default function Users() {
     }
   };
 
-  // CHANGE ROLE
-
-  // const changeRole = async (id, role) => {
-
-  //   try {
-
-  //     await axios.put(
-  //       `http://localhost:5000/api/users/changerole/${id}`,
-  //       { role }
-  //     );
-
-  //     fetchUsers();
-
-  //   }
-  //   catch (err) {
-
-  //     console.log(err);
-
-  //   }
-
-  // };
-
   // Search filter
   const filteredUsers = users.filter((user) =>
     user.email.toLowerCase().includes(search.toLowerCase())
@@ -62,14 +40,24 @@ export default function Users() {
   return (
     <>
       {/* Page Header Start */}
-      <div className="container-fluid page-header py-5">
-        <div className="container text-center py-5">
-          <h1 className="display-2 text-white mb-4 animated slideInDown">
-            Users
-          </h1>
-        </div>
-      </div>
-      {/* Page Header End */}
+                  <div className="container-fluid page-header py-5">
+                    <div className="container text-center py-5">
+                      <h1 className="display-2 text-white animated slideInDown">
+                        Users
+                      </h1>
+                      <nav aria-label="breadcrumb animated slideInDown">
+                        <ol className="breadcrumb justify-content-center mb-0">
+                          <li className="breadcrumb-item">
+                            <Link to={'/'}>Dashboard</Link>
+                          </li>
+                          <li className="breadcrumb-item" aria-current="page">
+                            Users
+                          </li>
+                        </ol>
+                      </nav>
+                    </div>
+                  </div>
+                  {/* Page Header End */}
       <div className="container py-5">
         <div className="p-4 p-md-1 rounded contact-form">
 

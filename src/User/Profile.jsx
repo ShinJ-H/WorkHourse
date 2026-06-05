@@ -77,35 +77,116 @@ export default function Profile() {
         fetchProfile();
     }, []);
 
+    const admin = JSON.parse(localStorage.getItem("admin"));
+
     // ✅ Update Profile
     const handleUpdate = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        try {
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("email", email);
-            formData.append("darkMode", String(user.darkMode));
-            formData.append("emailNotifications", String(user.emailNotifications));
-            formData.append("reminders", String(user.reminders));
+    try {
+        const token = getToken();
 
-            if (image) {
-                formData.append("image", image);
-            }
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
 
-            await axios.put(`${BASE_URL}/users/profile`, formData, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`,
-                },
-            });
-
-            fetchProfile();
-            setPreview(""); // reset preview
-
-        } catch (err) {
-            console.log(err.response?.data || err.message);
+        // If you want checkbox values to be saved too
+        if (user.darkMode !== undefined) {
+            formData.append("darkMode", String(!!user.darkMode));
         }
-    };
+        // Send checkbox values based on UI state (not existing server user object)
+        // This prevents sending undefined/incorrect values.
+        formData.append(
+            "emailNotifications",
+            String(!!user.emailNotifications)
+        );
+        formData.append("reminders", String(!!user.reminders));
+
+
+        if (image) {
+            formData.append("image", image);
+        }
+
+        const res = await axios.put(
+            `${BASE_URL}/users/profile`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+
+        // Update state
+        setUser((prev) => ({
+            ...prev,
+            name: res.data.name || name,
+            email: res.data.email || email,
+            avatar: res.data.avatar || prev.avatar,
+        }));
+
+        // Update localStorage user
+        const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify({
+                ...storedUser,
+                name: res.data.name || name,
+                email: res.data.email || email,
+                avatar: res.data.avatar || storedUser.avatar,
+            })
+        );
+
+        // Update localStorage manager if logged in as manager
+        const storedManager = JSON.parse(
+            localStorage.getItem("manager") || "null"
+        );
+
+        if (storedManager) {
+            localStorage.setItem(
+                "manager",
+                JSON.stringify({
+                    ...storedManager,
+                    name: res.data.name || name,
+                    email: res.data.email || email,
+                    avatar: res.data.avatar || storedManager.avatar,
+                })
+            );
+        }
+
+        // Update localStorage admin if logged in as admin
+        const storedAdmin = JSON.parse(
+            localStorage.getItem("admin") || "null"
+        );
+
+        if (storedAdmin) {
+            localStorage.setItem(
+                "admin",
+                JSON.stringify({
+                    ...storedAdmin,
+                    name: res.data.name || name,
+                    email: res.data.email || email,
+                    avatar: res.data.avatar || storedAdmin.avatar,
+                })
+            );
+        }
+
+        // Refresh Navbar/Header instantly
+        window.dispatchEvent(new Event("userChanged"));
+        window.dispatchEvent(new Event("storage"));
+
+        alert("Profile updated successfully");
+
+    } catch (error) {
+        console.error(error);
+        alert(
+            error.response?.data?.message ||
+            "Failed to update profile"
+        );
+    }
+};
 
     // ✅ Progress calculation (safe)
     const progress =
@@ -197,40 +278,6 @@ export default function Profile() {
                             }
                         }}
                     />
-
-                    {/* Settings */}
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.darkMode || false}
-                            onChange={(e) =>
-                                setUser({ ...user, darkMode: e.target.checked })
-                            }
-                        />
-                        Dark Mode
-                    </label>
-
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.emailNotifications || false}
-                            onChange={(e) =>
-                                setUser({ ...user, emailNotifications: e.target.checked })
-                            }
-                        />
-                        Email Notifications
-                    </label>
-
-                    <label className="flex gap-2 items-center">
-                        <input
-                            type="checkbox"
-                            checked={user.reminders || false}
-                            onChange={(e) =>
-                                setUser({ ...user, reminders: e.target.checked })
-                            }
-                        />
-                        Deadline Reminders
-                    </label>
 
                     <button className="w-full bg-blue-500 text-white py-2 rounded-lg">
                         Update Profile

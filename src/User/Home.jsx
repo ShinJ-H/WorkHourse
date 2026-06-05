@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 function TasksPreview() {
   const [tasks, setTasks] = useState([]);
@@ -47,7 +49,7 @@ function TasksPreview() {
                     {task.description || task.taskDescription || "No description"}
                   </p>
                   <div className="d-flex align-items-center justify-content-between">
-                    <span className="badge bg-primary">{task.status || "Pending"}</span>
+                    <span className="badge bg-purple-900">{task.status || "Pending"}</span>
                     <span className="text-secondary" style={{ fontSize: 12 }}>
                       {task.dueDate || task.deadline || ""}
                     </span>
@@ -62,7 +64,7 @@ function TasksPreview() {
       {tasks.length > 3 && (
         <div className="text-center mt-4">
           <button
-            className="btn btn-outline-primary rounded-pill px-5 py-3"
+            className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
             onClick={() => setShowAll((v) => !v)}
             type="button"
           >
@@ -76,6 +78,34 @@ function TasksPreview() {
 
 export default function Home() {
   const [user, setUser] = useState(null);
+  const [form, setForm] = useState({ name: "", email: "", project: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
+
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm((p) => ({ ...p, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+    try {
+      await axios.post("http://localhost:5000/api/queries", form);
+      setForm({ name: "", email: "", project: "", message: "" });
+      setSuccess("Message sent successfully.");
+    } catch (err) {
+      setError(err?.response?.data?.message || err.message || "Failed to send message");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const readUser = () => {
     try {
@@ -100,43 +130,6 @@ export default function Home() {
 
   return (
     <>
-      {isLoggedIn && (
-        <div className="container" style={{ paddingTop: 10, paddingBottom: 20, marginTop: 0 }}>
-          <div className="text-center" style={{ maxWidth: 900, margin: "0 auto" }}>
-            <h1 className="mb-3" style={{ marginTop: 20 }}>
-              Welcome back, {user?.name}
-            </h1>
-            <p className="mb-4 text-muted">
-              You are logged in as <b>{user?.role || "User"}</b>. Continue to your dashboard or your tasks.
-            </p>
-
-            <div className="d-flex flex-wrap gap-3 justify-content-center">
-              {user?.role === "Admin" ? (
-                <Link to="/admin" className="btn btn-success rounded-pill px-4 py-3">
-                  Go to Admin Dashboard
-                </Link>
-              ) : null}
-
-              {user?.role === "Manager" ? (
-                <Link to="/manager" className="btn btn-primary rounded-pill px-4 py-3">
-                  Go to Manager Dashboard
-                </Link>
-              ) : null}
-
-              {user?.role !== "Admin" && user?.role !== "Manager" ? (
-                <Link to="/tasks" className="btn btn-primary rounded-pill px-4 py-3">
-                  Go to My Tasks
-                </Link>
-              ) : null}
-
-              <Link to="/account-settings" className="btn btn-outline-secondary rounded-pill px-4 py-3">
-                Account Settings
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Carousel Start */}
       <div className="container-fluid px-0">
         <div id="carouselId" className="carousel slide" data-bs-ride="carousel">
@@ -159,25 +152,25 @@ export default function Home() {
                   <h6 className="h4 animated fadeInUp0" style={{ color: "white" }}>
                     Work Smarter with WorkHorse
                   </h6>
-                  <h1 className="text-white display-1 mb-4 animated fadeInRight">
+                  <h1 className="text-white display-1 animated fadeInRight">
                     An Innovative Work Management Solution
                   </h1>
-                  <p className="mb-4 text-white fs-5 animated fadeInDown">
+                  <p className="text-white fs-5 animated fadeInDown">
                     Manage your tasks efficiently with a smart and intuitive system. WorkHorse helps you organize, track,
                     and complete your work on time while improving productivity and collaboration.
                   </p>
-                  <Link to="/" className="me-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsReadMoreOpen(true)}
+                    className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
+                  >
+                    Read More
+                  </button>
+
+                  <Link to="/contactus" className="ms-2">
                     <button
                       type="button"
-                      className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft"
-                    >
-                      Read More
-                    </button>
-                  </Link>
-                  <Link to="/" className="ms-2">
-                    <button
-                      type="button"
-                      className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight"
+                      className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
                     >
                       Contact Us
                     </button>
@@ -190,26 +183,25 @@ export default function Home() {
               <img src="img/carousel-2.jpg" className="img-fluid" alt="Second slide" />
               <div className="carousel-caption">
                 <div className="container carousel-content">
-                  <h6 className="h4 animated fadeInUp">Work Smarter with WorkHorse</h6>
-                  <h1 className="text-white display-1 mb-4 animated fadeInLeft">
+                  <h6 className="h4 animated fadeInUp text-white">Work Smarter with WorkHorse</h6>
+                  <h1 className="text-white display-1 animated fadeInLeft">
                     Quality Task Management You Can Rely On
                   </h1>
-                  <p className="mb-4 text-white fs-5 animated fadeInDown">
+                  <p className="text-white fs-5 animated fadeInDown">
                     WorkHorse helps you streamline your tasks and manage workflows efficiently. Stay organized, track
                     progress, and achieve your goals with ease using a simple and powerful platform.
                   </p>
-                  <Link to="/" className="me-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsReadMoreOpen(true)}
+                    className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
+                  >
+                    Read More
+                  </button>
+                  <Link to="/contactus" className="ms-2">
                     <button
                       type="button"
-                      className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft"
-                    >
-                      Read More
-                    </button>
-                  </Link>
-                  <Link to="/" className="ms-2">
-                    <button
-                      type="button"
-                      className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight"
+                      className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
                     >
                       Contact Us
                     </button>
@@ -260,20 +252,24 @@ export default function Home() {
             </div>
 
             <div className="col-lg-7 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s">
-              <h5 className="text-primary">About Us</h5>
-              <h1 className="mb-4">About WorkHorse: Innovative Task & Workflow Management</h1>
+              <h5 className="!text-purple-900">About Us</h5>
+              <h1 className="">About WorkHorse: Innovative Task & Workflow Management</h1>
               <p>
                 WorkHorse is designed to simplify task and workflow management for individuals and teams. Our platform helps
                 users organize tasks, set priorities, and track progress efficiently. With a focus on productivity and ease of use,
                 WorkHorse enables better collaboration and ensures that every task is completed on time.
               </p>
-              <p className="mb-4">
+              <p className="">
                 WorkHorse provides a structured and efficient way to manage tasks and workflows. It helps users stay organized,
                 prioritize work, and maintain consistency in completing tasks.
               </p>
-              <Link to="/" className="btn btn-secondary rounded-pill px-5 py-3 text-white">
+              <button
+                type="button"
+                onClick={() => setIsDetailsOpen(true)}
+                className="inline-flex items-center justify-center !rounded-full bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800"
+              >
                 More Details
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -288,7 +284,7 @@ export default function Home() {
             data-wow-delay=".3s"
             style={{ maxWidth: 600 }}
           >
-            <h5 className="text-primary">Your Tasks</h5>
+            <h5 className="!text-purple-900">Your Tasks</h5>
             <h1>Solutions Built for Your Workflow</h1>
             <p className="text-muted mb-0">Showing up to 3 tasks. Click Load more to see others.</p>
           </div>
@@ -308,41 +304,83 @@ export default function Home() {
 
       {/* Contact Start */}
       <div className="container-fluid py-5 mb-5">
+
+
         <div className="container">
           <div
             className="text-center mx-auto pb-5 wow fadeIn"
             data-wow-delay=".3s"
             style={{ maxWidth: 600 }}
           >
-            <h5 className="text-primary">Get In Touch</h5>
+            <h5 className="!text-purple-900">Get In Touch</h5>
             <h1 className="mb-3">Contact for any query</h1>
           </div>
 
+          {/* Contact form (from ContactUs.jsx) */}
           <div className="contact-detail position-relative p-4 p-md-5 ">
-            <div className="row g-5">
+            <div className="row g-5 justify-content-center">
               <div className="col-lg-6 wow fadeIn" data-wow-delay=".5s">
                 <div className="p-4 p-md-5 rounded contact-form">
-                  <div className="mb-4">
-                    <input type="text" className="form-control border-0 py-3" placeholder="Your Name" />
+                  {/* NOTE: handled by Home component state/logic */}
+                  <div className="mb-4 rounded-xl">
+                    <input
+                      type="text"
+                      className="form-control py-3"
+                      placeholder="Your Name"
+                      value={form.name}
+                      onChange={onChange}
+                      name="name"
+                      required
+                    />
                   </div>
-                  <div className="mb-4">
-                    <input type="email" className="form-control border-0 py-3" placeholder="Your Email" />
+
+                  <div className="mb-4 rounded-xl">
+                    <input
+                      type="email"
+                      className="form-control py-3"
+                      placeholder="Your Email"
+                      value={form.email}
+                      onChange={onChange}
+                      name="email"
+                      required
+                    />
                   </div>
-                  <div className="mb-4">
-                    <input type="text" className="form-control border-0 py-3" placeholder="Project" />
+
+                  <div className="mb-4 rounded-xl">
+                    <input
+                      type="text"
+                      className="form-control py-3"
+                      placeholder="Query Name"
+                      value={form.project}
+                      onChange={onChange}
+                      name="project"
+                    />
                   </div>
-                  <div className="mb-4">
+
+                  <div className="mb-4 rounded-xl">
                     <textarea
-                      className="w-100 form-control border-0 py-3"
+                      className="w-100 form-control py-3"
                       rows={6}
                       cols={10}
                       placeholder="Message"
-                      defaultValue={""}
+                      value={form.message}
+                      onChange={onChange}
+                      name="message"
+                      required
                     />
                   </div>
-                  <div className="text-start">
-                    <button className="btn bg-primary text-white py-3 px-5" type="button">
-                      Send Message
+
+                  {error && <div className="mb-3 text-red-600">{error}</div>}
+                  {success && <div className="mb-3 text-green-600">{success}</div>}
+
+                  <div className="text-center">
+                    <button
+                      className="inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={loading}
+                    >
+                      {loading ? "Sending..." : "Send Message"}
                     </button>
                   </div>
                 </div>
@@ -352,6 +390,156 @@ export default function Home() {
         </div>
       </div>
       {/* Contact End */}
+
+
+      {/* Tailwind Read More Modal */}
+      {isReadMoreOpen && (
+        <div className="fixed inset-0 z-50" role="presentation">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsReadMoreOpen(false)}
+            aria-hidden="true"
+          />
+
+          <div className="relative min-h-full flex items-center justify-center p-4">
+            <div
+              className="w-full max-w-md rounded-2xl bg-white text-gray-900 shadow-2xl overflow-hidden"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Read more about WorkHouse"
+              tabIndex={-1}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setIsReadMoreOpen(false);
+              }}
+            >
+              <div className="p-5 border-b border-gray-200 flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold">What is WorkHouse?</h2>
+                  <p className="text-gray-600 mt-1">
+                    WorkHouse is a simple yet powerful work management platform that helps individuals and teams
+                    organize tasks, track progress, and complete work on time.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsReadMoreOpen(false)}
+                  className="shrink-0 inline-flex items-center justify-center rounded-full p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  aria-label="Close modal"
+                >
+                  <span aria-hidden="true" className="text-xl leading-none">
+                    ×
+                  </span>
+                </button>
+              </div>
+
+              <div className="p-5">
+                <button
+                  type="button"
+                  onClick={() => setIsReadMoreOpen(false)}
+                  className="w-full inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-2.5 text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tailwind More Details Modal */}
+      {isDetailsOpen && (
+        <div className="fixed inset-0 z-50" role="presentation">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setIsDetailsOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Keep modal small + centered; allow internal scrolling */}
+
+          <div className="relative min-h-full flex items-center justify-center p-4">
+            <div
+              className="w-full max-w-3xl rounded-2xl bg-white text-gray-900 shadow-2xl overflow-hidden"
+              role="dialog"
+              aria-modal="true"
+              aria-label="More Details"
+              tabIndex={-1}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setIsDetailsOpen(false);
+              }}
+            >
+              <div className="max-h-[70vh] overflow-y-auto">
+                <div className="flex items-start justify-between gap-4 p-5 border-b border-gray-200">
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-bold">About WorkHouse</h2>
+                    <p className="text-gray-600 mt-1">
+                      Innovative task & workflow management designed for real productivity.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsDetailsOpen(false)}
+                    className="shrink-0 inline-flex items-center justify-center rounded-full p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    aria-label="Close modal"
+                  >
+                    <span aria-hidden="true" className="text-xl leading-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+
+                <div className="p-5">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-xl bg-indigo-50 p-4">
+                      <h3 className="font-semibold">Organize</h3>
+                      <p className="text-gray-700 mt-1">
+                        Keep tasks structured, set priorities, and track everything in one place.
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-indigo-50 p-4">
+                      <h3 className="font-semibold">Track Progress</h3>
+                      <p className="text-gray-700 mt-1">
+                        Stay updated with clear status and due dates so work never goes missing.
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-indigo-50 p-4">
+                      <h3 className="font-semibold">Collaborate</h3>
+                      <p className="text-gray-700 mt-1">
+                        Share progress and stay aligned with teams through a simple workflow.
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-indigo-50 p-4">
+                      <h3 className="font-semibold">Work Smarter</h3>
+                      <p className="text-gray-700 mt-1">
+                        Reduce effort with an interface that helps you focus on completing tasks.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 rounded-xl border border-gray-200 p-4 bg-white">
+                    <p className="text-gray-700">
+                      WorkHouse is built to make task management effortless—helping individuals and teams
+                      organize, prioritize, and deliver on time.
+                    </p>
+                  </div>
+
+                  <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsDetailsOpen(false)}
+                      className="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-2.5 text-gray-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Floating Chatbot Button (only for logged-in users) */}
       {isLoggedIn ? (

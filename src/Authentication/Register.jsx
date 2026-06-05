@@ -58,7 +58,7 @@ export default function Register() {
     <>
       <div className="container-fluid page-header py-5">
         <div className="container text-center py-5">
-          <h1 className="display-2 text-white mb-4 animated slideInDown">User Registration</h1>
+          <h1 className="display-2 text-white mb-3 animated slideInDown">User Registration</h1>
         </div>
       </div>
 
@@ -91,22 +91,22 @@ export default function Register() {
                 )}
 
                 <form className="p-4 p-md-5 rounded contact-form" onSubmit={handleSubmit}>
-                  <div className="mb-4">
+                  <div className="mb-4 rounded-xl">
                     <input className="form-control border-0 py-3" type="text"
                       name="name" placeholder="Enter Name"
                       value={formData.name} onChange={handleChange} required />
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-4 rounded-xl">
                     <input className="form-control border-0 py-3" type="email"
                       name="email" placeholder="Enter Email"
                       value={formData.email} onChange={handleChange} required />
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-4 rounded-xl">
                     <input className="form-control border-0 py-3" type="password"
                       name="password" placeholder="Enter Password"
                       value={formData.password} onChange={handleChange} required />
                   </div>
-                  <div className="mb-4">
+                  <div className="mb-4 rounded-xl">
                     <label className="form-label text-muted" style={{ fontSize: "0.85rem" }}>
                       Profile Avatar (optional)
                     </label>
@@ -114,7 +114,7 @@ export default function Register() {
                       accept="image/*" onChange={handleChangeImage} />
                   </div>
                   <div className="text-start">
-                    <button className="btn bg-primary text-white py-3 px-5" type="submit">Register</button>
+                    <button className="inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70" type="submit">Register</button>
                   </div>
                 </form>
               </div>

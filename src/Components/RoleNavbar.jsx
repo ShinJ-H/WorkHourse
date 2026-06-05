@@ -3,21 +3,45 @@ import { useEffect, useMemo, useState } from "react";
 
 function getUserFromStorage() {
     try {
-        const stored = localStorage.getItem("user");
-        console.log("stored user: ", stored);
-        return stored ? JSON.parse(stored) : null;
+        // Prefer `user` (regular login). If not present, fall back to `admin` (admin login).
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            return JSON.parse(storedUser);
+        }
+
+        const storedAdmin = localStorage.getItem("admin");
+        if (storedAdmin) {
+            const adminObj = JSON.parse(storedAdmin);
+            // Normalize shape to match frontend expectations: include `token` if available
+            const token = localStorage.getItem("token");
+            return {
+                _id: adminObj._id || adminObj.id,
+                name: adminObj.name || adminObj.email || "Admin",
+                email: adminObj.email,
+                role: adminObj.role || "admin",
+                avatar: adminObj.avatar || null,
+                token: token || null,
+            };
+        }
+
+        return null;
     } catch {
         return null;
     }
 }
 
 function getAvatarFileName(user) {
-    return (
-        user?.avatar?.url ||
-        user?.avatar?.public_id ||
-        (typeof user?.avatar === "string" ? user.avatar : null)
-    );
+    // Backend stores: user.avatar = { url: filename, public_id: filename }
+    // Frontend should use whichever exists.
+    const av = user?.avatar;
+
+    if (!av) return null;
+
+    if (typeof av === "string") return av;
+
+    return av?.url || av?.public_id || null;
 }
+
 
 function getAvatarSrc(user) {
     const avatarFileName = getAvatarFileName(user);
@@ -73,7 +97,7 @@ export default function RoleNavbar() {
             ? "2px solid #198754"
             : user?.role === "Manager"
               ? "2px solid #0d6efd"
-              : "2px solid #ffc107";
+              : "2px solid #5c0091";
 
     const avatarFallback = (e) => {
         if (!user) return;
@@ -88,7 +112,7 @@ export default function RoleNavbar() {
                     <Link to={"/admin/assigntasks"} className="nav-item nav-link">Assign Tasks</Link>
                     <Link to={"/admin/users"} className="nav-item nav-link">Users</Link>
                     <Link to={"/admin/projects"} className="nav-link"> Projects </Link>
-                    {/* <Link to={"/admin/tasksprojects"} className="nav-link"> Tasks & Projects </Link> */}
+                    <Link to={"/admin/queries"} className="nav-link"> Queries </Link>
                 </>
             );
         }
@@ -214,12 +238,12 @@ export default function RoleNavbar() {
                                     <ul className="dropdown-menu dropdown-menu-end rounded shadow mt-2" style={{ minWidth: "220px" }}>
                                         {/* USER INFO HEADER */}
                                         <li className="px-3 py-2 d-flex align-items-center gap-2" style={{ borderBottom: "1px solid #eee" }}>
-                                            <img
-                                                src={avatarSrc}
-                                                alt=""
-                                                onError={avatarFallback}
-                                                style={{ width: "38px", height: "38px", borderRadius: "50%", objectFit: "cover" }}
-                                            />
+                                        <img
+                                            src={avatarSrc}
+                                            alt=""
+                                            onError={avatarFallback}
+                                            style={{ width: "38px", height: "38px", borderRadius: "50%", objectFit: "cover" }}
+                                        />
                                             <div>
                                                 <strong style={{ fontSize: "0.85rem", display: "block" }}>{user.name}</strong>
                                                 <small className="text-muted">{user.email}</small>
@@ -231,7 +255,7 @@ export default function RoleNavbar() {
                                                                 ? "#198754"
                                                                 : user.role === "Manager"
                                                                   ? "#0d6efd"
-                                                                  : "#ffc107",
+                                                                  : "#5c0091",
                                                         fontSize: "0.75rem",
                                                     }}
                                                 >
@@ -259,17 +283,12 @@ export default function RoleNavbar() {
                                         {/* COMMON LINKS */}
                                         <li>
                                             <Link to={"/profile"} className="dropdown-item">
-                                                <i className="fas fa-user-alt me-2"></i>My Profile
+                                                <i className="fas fa-user-alt me-2 text-purple-900"></i>My Profile
                                             </Link>
                                         </li>
                                         <li>
                                             <Link to={"/chat"} className="dropdown-item">
-                                                <i className="fas fa-comment-alt me-2"></i>Inbox
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link to={"/account-settings"} className="dropdown-item">
-                                                <i className="fas fa-cog me-2"></i>Account Settings
+                                                <i className="fas fa-comment-alt me-2 text-purple-900"></i>Inbox
                                             </Link>
                                         </li>
 

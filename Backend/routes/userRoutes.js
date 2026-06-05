@@ -140,30 +140,6 @@ router.put(
       user.email =
         req.body.email || user.email;
 
-      // Dark mode
-      if (
-        req.body.darkMode !== undefined
-      ) {
-        user.darkMode =
-          req.body.darkMode === "true";
-      }
-
-      // Email notifications
-      if (
-        req.body.emailNotifications !== undefined
-      ) {
-        user.emailNotifications =
-          req.body.emailNotifications === "true";
-      }
-
-      // Reminders
-      if (
-        req.body.reminders !== undefined
-      ) {
-        user.reminders =
-          req.body.reminders === "true";
-      }
-
       // Avatar upload
       if (req.file) {
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function ManagerTasks() {
   const [tasks, setTasks] = useState([]);
@@ -186,11 +187,25 @@ export default function ManagerTasks() {
 
   return (
     <>
-      <div className="container-fluid page-header py-5">
-        <div className="container text-center py-5">
-          <h1 className="display-2 text-white mb-4 animated slideInDown">Assign Tasks</h1>
-        </div>
-      </div>
+      {/* Page Header Start */}
+            <div className="container-fluid page-header py-5">
+              <div className="container text-center py-5">
+                <h1 className="display-2 text-white animated slideInDown">
+                  Manager Assign Tasks
+                </h1>
+                <nav aria-label="breadcrumb animated slideInDown">
+                  <ol className="breadcrumb justify-content-center mb-0">
+                    <li className="breadcrumb-item">
+                      <Link to={'/'}>Manager Dashboard</Link>
+                    </li>
+                    <li className="breadcrumb-item" aria-current="page">
+                      Manager Assign Tasks
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            {/* Page Header End */}
 
       <div className="container-fluid">
         <div className="container py-5">

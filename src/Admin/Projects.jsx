@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Projects() {
   const { id } = useParams();
@@ -210,10 +210,30 @@ export default function Projects() {
   };
 
   return (
+    <>
+    {/* Page Header Start */}
+                <div className="container-fluid page-header py-5">
+                  <div className="container text-center py-5">
+                    <h1 className="display-2 text-white animated slideInDown">
+                      Assign Projects
+                    </h1>
+                    <nav aria-label="breadcrumb animated slideInDown">
+                      <ol className="breadcrumb justify-content-center mb-0">
+                        <li className="breadcrumb-item">
+                          <Link to={'/'}>Dashboard</Link>
+                        </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                          Assign Projects
+                        </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+                {/* Page Header End */}
     <div className="container mt-4">
       {/* FORM */}
       <div className="card shadow p-4 mb-5">
-        <h2 className="mb-4">{editingId ? "Update Project" : "Create Project Team"}</h2>
+        <h2 className="">{editingId ? "Update Project" : "Create Project Team"}</h2>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -288,7 +308,7 @@ export default function Projects() {
           </select>
 
           {/* TEAM */}
-          <div className="dropdown mb-4">
+          <div className="dropdown mb-3">
             <button
               className="btn btn-outline-dark dropdown-toggle w-100 text-start"
               type="button"
@@ -342,11 +362,11 @@ export default function Projects() {
       </div>
 
       {/* ALL PROJECTS */}
-      <h2 className="mb-4">All Team Projects</h2>
+      <h2 className="mb-3">All Team Projects</h2>
 
       <div className="row">
         {projects.map((project) => (
-          <div className="col-md-4 mb-4" key={project._id}>
+          <div className="col-md-4 mb-3" key={project._id}>
             <div className="card shadow p-3 h-100">
               <h4>{project.title}</h4>
               <p>{project.description}</p>
@@ -500,6 +520,7 @@ export default function Projects() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

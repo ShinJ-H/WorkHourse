@@ -3,6 +3,10 @@ import bcrypt from "bcryptjs";
 
 const adminSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      default: "Admin",
+    },
     email: {
       type: String,
       required: true,
@@ -11,6 +15,10 @@ const adminSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true
+    },
+    avatar: {
+      url: String,
+      public_id: String
     }
   },
   { timestamps: true }

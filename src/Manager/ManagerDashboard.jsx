@@ -79,13 +79,15 @@ export default function ManagerDashboard() {
   };
   return (
     <>
-      <div className="container-fluid page-header py-5">
-        <div className="container text-center py-5">
-          <h1 className="display-2 text-white">
-            Manager Dashboard
-          </h1>
-        </div>
-      </div>
+      {/* Page Header Start */}
+            <div className="container-fluid page-header py-5">
+              <div className="container text-center py-5">
+                <h1 className="display-2 text-white animated slideInDown">
+                  Manager Dashboard
+                </h1>
+              </div>
+            </div>
+            {/* Page Header End */}
       <div
         style={{
           width: "100%",

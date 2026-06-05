@@ -4,11 +4,11 @@ li{
 }
 
 .container-fluid-nav{
-    background-color: rgb(183, 0, 255);
+    background-color: rgb(210, 96, 255);
 }
 
 .container-fluid-fact{
-    background-color: rgb(183, 0, 255);
+    background-color: rgb(210, 96, 255);
 }
 
 .topbar .dropdown-toggle::after {
@@ -18,18 +18,18 @@ li{
     font-weight: 600;
     vertical-align: middle;
     margin-left: 8px;
-    color: rgb(183, 0, 255);
+    color: rgb(210, 96, 255);
 }
 
 .topbar .dropdown .dropdown-menu a:hover {
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     color: rgb(221, 136, 255);
 }
 
 .topbar .dropdown .dropdown-menu {
     transform: rotateX(0deg);
     visibility: visible;
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     padding-top: 11px;
     border: 0;
     transition: .5s;
@@ -183,7 +183,7 @@ li{
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .3);
 }
 
 .carousel-caption {
@@ -205,7 +205,7 @@ li{
     position: absolute;
     top: 50%;
     left: 0;
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     border-radius: 0 50px 50px 0;
     opacity: 1;
 }
@@ -221,7 +221,7 @@ li{
     position: absolute;
     top: 50%;
     right: 0;
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     border-radius: 50px 0 0 50px;
     opacity: 1;
 }
@@ -232,7 +232,7 @@ li{
 }
 
 .carousel-caption .carousel-content a button.carousel-content-btn1 {
-    background: rgb(183, 0, 255);
+    /* background: rgb(210, 96, 255); */
     color: rgb(233, 178, 255);
     opacity: 1;
     border: 0;
@@ -249,7 +249,7 @@ li{
 }
 
 .carousel-caption .carousel-content a button.carousel-content-btn2 {
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     color: rgb(233, 173, 255);
     opacity: 1;
     border: 0;
@@ -268,7 +268,7 @@ li{
 #carouselId .carousel-indicators li {
     width: 30px;
     height: 10px;
-    background: rgb(183, 0, 255);
+    background: rgb(210, 96, 255);
     margin: 10px;
     border-radius: 30px;
     opacity: 1;
@@ -323,7 +323,7 @@ li{
 }
 
 .page-header .breadcrumb-item+.breadcrumb-item::before {
-    color: rgb(183, 0, 255);
+    color: rgb(210, 96, 255);
 }
 
 .page-header .breadcrumb-item,
@@ -440,15 +440,19 @@ li{
     background: linear-gradient(rgb(210, 243, 235, 1), rgba(230, 250, 245, .3)), url(../img/background.jpg) center center no-repeat;
     background-size: cover;
     border-radius: 10px;
-    z-index: -1;
+    z-index: -1; 
 }
 
-.contact-map {
-    background: rgb(108, 0, 151);
-}
 
-.contact-form {
-    background: rgb(108, 0, 151);
+.contact-form{
+    background: rgb(255, 255, 255);
+    border-width: 2px;
+    border-color: rgb(210, 96, 255);
+}
+.mb-4{
+    /* background: rgb(5, 5, 5); */
+    border-width: 2px;
+    border-color: rgb(210, 96, 255);
 }
 
 /*** Contact End ***/

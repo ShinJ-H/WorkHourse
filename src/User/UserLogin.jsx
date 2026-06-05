@@ -113,7 +113,7 @@ export default function UserLogin() {
             {/* Header */}
             <div className="container-fluid page-header py-5">
                 <div className="container text-center py-5">
-                    <h1 className="display-2 text-white mb-4 animated slideInDown">
+                    <h1 className="display-2 text-white animated slideInDown">
                         User Login
                     </h1>
                 </div>
@@ -174,7 +174,7 @@ export default function UserLogin() {
                                 >
 
                                     {/* Email */}
-                                    <div className="mb-4">
+                                    <div className="mb-4 rounded-lg">
                                         <input
                                             className="form-control border-0 py-3"
                                             type="email"
@@ -187,7 +187,7 @@ export default function UserLogin() {
                                     </div>
 
                                     {/* Password */}
-                                    <div className="mb-4">
+                                    <div className="mb-4 rounded-lg">
                                         <input
                                             className="form-control border-0 py-3"
                                             type="password"
@@ -202,7 +202,7 @@ export default function UserLogin() {
                                     {/* Button */}
                                     <div className="text-start">
                                         <button
-                                            className="btn bg-primary text-white py-3 px-5"
+                                            className="inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
                                             type="submit"
                                         >
                                             Login
@@ -215,7 +215,7 @@ export default function UserLogin() {
                         {/* Register */}
                         <h4 style={{ textAlign: "center" }}>
                             If you are not registered then first{" "}
-                            <Link to={"/register"}>register</Link> your email
+                            <Link to={"/register"} className="!text-purple-700">register</Link> your email
                         </h4>
                     </div>
                 </div>

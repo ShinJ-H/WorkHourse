@@ -12,6 +12,8 @@ import chatRoutes from "./routes/chatRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import queryRoutes from "./routes/queryRoutes.js";
+
 import path from "path";
 import fs from "fs";
 import http from "http";
@@ -149,6 +151,8 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/notes", noteRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/queries", queryRoutes);
+
 
 // Test Route
 app.get("/", (req, res) => {

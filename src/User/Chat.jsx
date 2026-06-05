@@ -179,11 +179,7 @@ const Chat = () => {
     }
 
     // UI UPDATE
-    setMessages((prev) => [
-      ...prev,
-      msgData,
-    ]);
-
+    // Removed optimistic update to prevent duplicate messages.
     setMessage("");
   };
 

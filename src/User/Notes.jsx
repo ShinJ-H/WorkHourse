@@ -24,9 +24,30 @@ const Notes = () => {
   }, []);
 
   // Submit note
+  // ➕ CREATE
+  const handleCreate = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    if (image) formData.append("image", image);
+
+    await axios.post("http://localhost:5000/api/notes", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    setTitle("");
+    setContent("");
+    setImage(null);
+
+    fetchNotes();
+  };
+
   // 🔥 DELETE
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this note?")) return;
+
 
     await axios.delete(`http://localhost:5000/api/notes/${id}`);
     fetchNotes();
@@ -59,16 +80,13 @@ const Notes = () => {
       {/* Page Header Start */}
       <div className="container-fluid page-header py-5">
         <div className="container text-center py-5">
-          <h1 className="display-2 text-white mb-4 animated slideInDown">
+          <h1 className="display-2 text-white animated slideInDown">
             Notes
           </h1>
           <nav aria-label="breadcrumb animated slideInDown">
             <ol className="breadcrumb justify-content-center mb-0">
               <li className="breadcrumb-item">
                 <Link to={'/'}>Home</Link>
-              </li>
-              <li className="breadcrumb-item">
-                <Link to={'/'}>Pages</Link>
               </li>
               <li className="breadcrumb-item" aria-current="page">
                 Notes
@@ -81,18 +99,19 @@ const Notes = () => {
       <div className="min-h-screen bg-gray-100 p-6">
 
         {/* Add Note Form */}
-        <div className="max-w-3xl mx-auto mb-10">
+        <div className="max-w-3xl mx-auto mb-10 mb-4 rounded-2xl">
           <div className="bg-white shadow-xl rounded-2xl p-6 border">
 
             <h2 className="text-2xl font-bold text-gray-700 mb-6">
               Create New Note
             </h2>
 
-            <form onSubmit={handleDelete} className="space-y-5">
+            <form onSubmit={handleCreate} className="space-y-5">
+
 
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
+                <label className="block text-2xl font-medium text-gray-600 mb-1">
                   Title
                 </label>
                 <input
@@ -100,33 +119,33 @@ const Notes = () => {
                   placeholder="Enter note title..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-400 outline-none"
+                  className="w-full px-4 py-3 mb-4 rounded-xl focus:ring-2 focus:ring-blue-400 outline-none "
                   required
                 />
               </div>
 
               {/* Content */}
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
+                <label className="block text-2xl font-medium text-gray-600 mb-1">
                   Content
                 </label>
                 <textarea
                   placeholder="Write your note here..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full px-4 py-3 border rounded-xl h-32 resize-none focus:ring-2 focus:ring-blue-400 outline-none"
+                  className="w-full px-4 py-3 mb-4 rounded-xl h-32 resize-none focus:ring-2 focus:ring-blue-400 outline-none"
                   required
                 />
               </div>
 
               {/* File Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">
+                <label className="block text-2xl font-medium text-gray-600 mb-2">
                   Upload Image
                 </label>
 
                 <div className="flex items-center gap-4">
-                  <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg border">
+                  <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg mb-4 w-full">
                     Choose File
                     <input
                       type="file"
@@ -146,7 +165,7 @@ const Notes = () => {
               {/* Button */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 rounded-xl font-semibold hover:opacity-90"
+                className="w-full inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
               >
                 Add Note
               </button>
@@ -171,7 +190,7 @@ const Notes = () => {
               {notes.map((note) => (
                 <div
                   key={note._id}
-                  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
+                  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition mb-4"
                 >
                   {note.image && (
                     <img
@@ -235,21 +254,54 @@ const Notes = () => {
                         </p>
 
                         {/* ACTION BUTTONS */}
-                        <div className="flex gap-3 mt-4">
+                        <div className="flex items-center gap-3 mt-4">
                           <button
                             onClick={() => startEdit(note)}
-                            className="text-blue-500 font-medium p-1 bg-blue-300 border-2 border-blue-700"
+                            className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                            aria-label={`Edit ${note.title}`}
                           >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                            >
+                              <path d="M12 20h9" />
+                              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                            </svg>
                             Edit
                           </button>
 
                           <button
                             onClick={() => handleDelete(note._id)}
-                            className="text-red-500 font-medium p-1 bg-red-300 border-2 border-red-700"
+                            className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-red-600 to-rose-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-rose-300"
+                            aria-label={`Delete ${note.title}`}
                           >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                            >
+                              <polyline points="3 6 5 6 21 6" />
+                              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                              <path d="M10 11v6" />
+                              <path d="M14 11v6" />
+                              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                            </svg>
                             Delete
                           </button>
                         </div>
+
+
                       </>
                     )}
                   </div>

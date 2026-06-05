@@ -40,6 +40,9 @@ export default function AdminLogin() {
 
             localStorage.setItem("admin", JSON.stringify(res.data.admin));
 
+            // Ensure header/navbar reads the new admin data immediately
+            window.dispatchEvent(new Event("userChanged"));
+
             setTimeout(() => {
                 nav("/admin");
             }, 1000);

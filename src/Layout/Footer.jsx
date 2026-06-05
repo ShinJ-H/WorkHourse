@@ -12,79 +12,53 @@ export default function Footer() {
                     <div className="row g-5">
                         <div className="col-lg-3 col-md-6">
                             <Link to={'/'}>
-                                <h1 className="text-white fw-bold d-block">
-                                    Work<span className="text-secondary">House</span>{" "}
+                                <h1 className="!text-purple-300 fw-bold d-block">
+                                    Work<span className="text-purple-700">House</span>{" "}
                                 </h1>
                             </Link>
-                            <div className="d-flex workhouse-link">
-                                <Link
-                                    to={'/'}
-                                    className="btn-light nav-fill btn btn-square rounded-circle me-2"
-                                >
-                                    <i className="fab fa-facebook-f text-primary" />
-                                </Link>
-                                <Link
-                                    to={'/'}
-                                    className="btn-light nav-fill btn btn-square rounded-circle me-2"
-                                >
-                                    <i className="fab fa-twitter text-primary" />
-                                </Link>
-                                <Link
-                                    to={'/'}
-                                    className="btn-light nav-fill btn btn-square rounded-circle me-2"
-                                >
-                                    <i className="fab fa-instagram text-primary" />
-                                </Link>
-                                <Link
-                                    to={'/'}
-                                    className="btn-light nav-fill btn btn-square rounded-circle me-0"
-                                >
-                                    <i className="fab fa-linkedin-in text-primary" />
-                                </Link>
-                            </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
-                            <Link to="#" className="h3 text-secondary">
+                            <Link to="#" className="h3 !text-purple-700">
                                 Short Link
                             </Link>
                             <div className="mt-4 d-flex flex-column short-link">
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     About us
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Contact us
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Our Services
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Our Projects
                                 </Link>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6">
-                            <Link to="#" className="h3 text-secondary">
+                            <Link to="#" className="h3 !text-purple-700">
                                 Help Link
                             </Link>
                             <div className="mt-4 d-flex flex-column help-link">
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Terms Of use
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Privacy Policy
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Helps
                                 </Link>
                                 <Link to={'/'} className="mb-2 text-white">
-                                    <i className="fas fa-angle-right text-secondary me-2" />
+                                    <i className="fas fa-angle-right !text-purple-500 me-2" />
                                     Contact
                                 </Link>
                             </div>

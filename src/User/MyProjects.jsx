@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import UpdateModal from "./UpdateModal";
+import { Link } from "react-router-dom";
 
 const formatDate = (d) => {
   if (!d) return "N/A";
@@ -15,6 +16,12 @@ export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  // Filters
+  const [keyword, setKeyword] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All"); // Pending | In Progress | Completed | Overdue (based on my member status)
+  const [priorityFilter, setPriorityFilter] = useState("All"); // High | Medium | Low (based on project.priority)
+
 
   const user = useMemo(() => {
     try {
@@ -49,7 +56,62 @@ export default function MyProjects() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?._id]);
 
+  const filteredProjects = useMemo(() => {
+    const kw = String(keyword || "").trim().toLowerCase();
+
+    return projects.filter((project) => {
+      const currentMember = project.team?.find((m) => m.user?._id === user?._id);
+      const memberStatus = currentMember?.status || "Pending";
+
+      const matchesStatus =
+        statusFilter === "All" ? true : (() => {
+          const f = String(statusFilter).toLowerCase();
+          const normalized = String(memberStatus)
+            .toLowerCase()
+            .replaceAll("_", " ")
+            .replaceAll("-", " ")
+            .replace(/\s+/g, " ")
+            .trim();
+          return normalized === f;
+        })();
+
+      const p = String(project?.priority ?? "").toLowerCase();
+      const matchesPriority =
+        priorityFilter === "All" ? true : p === String(priorityFilter).toLowerCase();
+
+      const matchesKeyword =
+        !kw
+          ? true
+          : [project?.title, project?.description, memberStatus, project?.priority]
+              .filter(Boolean)
+              .some((v) => String(v).toLowerCase().includes(kw));
+
+      return matchesStatus && matchesPriority && matchesKeyword;
+    });
+  }, [projects, keyword, statusFilter, priorityFilter, user?._id]);
+
   return (
+    <>
+    {/* Page Header Start */}
+          <div className="container-fluid page-header py-5">
+
+            <div className="container text-center py-5">
+              <h1 className="display-2 text-white animated slideInDown">
+                Projects
+              </h1>
+              <nav aria-label="breadcrumb animated slideInDown">
+                <ol className="breadcrumb justify-content-center mb-0">
+                  <li className="breadcrumb-item">
+                    <Link to={'/'}>Home</Link>
+                  </li>
+                  <li className="breadcrumb-item" aria-current="page">
+                    Projects
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          {/* Page Header End */}
     <div className="w-full py-10 md:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
@@ -57,7 +119,64 @@ export default function MyProjects() {
           <p className="mt-1 text-sm text-slate-600">View project details and update status.</p>
         </div>
 
-        {projects.length === 0 ? (
+        {/* Search/Filter Bar */}
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm">
+          <div className="grid gap-3 md:grid-cols-4">
+            <div className="md:col-span-1">
+              <input
+                className="form-control border-0 py-3"
+                type="text"
+                placeholder="Search keyword..."
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <select
+                className="form-control border-0 py-3"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="All">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Overdue">Overdue</option>
+              </select>
+            </div>
+
+            <div>
+              <select
+                className="form-control border-0 py-3"
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+              >
+                <option value="All">All Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+
+            <div className="flex items-center">
+              <button
+                type="button"
+                className="btn btn-outline-dark w-full"
+                onClick={() => {
+                  setKeyword("");
+                  setStatusFilter("All");
+                  setPriorityFilter("All");
+                }}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {filteredProjects.length === 0 ? (
+
           <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/70 px-6 py-10">
             <p className="text-base font-medium text-slate-700">
               No Projects Found
@@ -65,7 +184,8 @@ export default function MyProjects() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => {
+            {filteredProjects.map((project) => {
+
               const projectId = project._id || project.id;
               const currentMember = project.team?.find(
                 (m) => m.user?._id === user?._id
@@ -92,7 +212,7 @@ export default function MyProjects() {
                       setModalOpen(true);
                     }
                   }}
-                  className="cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                  className="cursor-pointer overflow-hidden rounded-2xl border-slate-200 bg-white shadow-sm mb-4"
                 >
                   {/* MEDIA */}
                   <div className="relative h-44 w-full bg-slate-100">
@@ -164,7 +284,7 @@ export default function MyProjects() {
                                 href={f.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white"
+                                className="w-full inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 Open File
@@ -223,6 +343,7 @@ export default function MyProjects() {
         item={selectedItem}
       />
     </div>
+    </>
   );
 }
 

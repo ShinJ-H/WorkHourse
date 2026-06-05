@@ -16,7 +16,6 @@ import Users from './Admin/Users'
 import ManagerUsers from './Manager/Users'
 import ChatBot from './User/ChatBot'
 import Profile from './User/Profile'
-import AccountSettings from './User/AccountSettings'
 import Chat from './User/Chat'
 import Projects from './Admin/Projects'
 import MyProjects from './User/MyProjects'
@@ -27,6 +26,7 @@ import ManagerAssignTasks from './Manager/ManagerAssignTasks'
 import ManagerProjects from './Manager/ManagerProjects'
 import AdminStatusTable from './Admin/AdminStatusTables'
 import ManagerStatusTable from './Manager/ManagerStatusTables'
+import Queries from './Admin/Queries'
 // import ManagerTasks from './Manager/ManagerTasks'
 
 function App() {
@@ -47,7 +47,6 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/chatbot' element={<ChatBot />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/account-settings' element={<AccountSettings />} />
             <Route path='/chat' element={<Chat />} />
             <Route path='/myprojects' element={<MyProjects />} />
           </Route>
@@ -62,6 +61,7 @@ function App() {
             <Route path='/admin/projects/:id' element={<Projects />} />
             <Route path='/admin/edit-user/:id' element={<EditUser/>} />
             <Route path='/admin/statustable' element={<AdminStatusTable/>} />
+            <Route path='/admin/queries' element={<Queries/>} />
           </Route>
 
           {/* ── MANAGER ROUTES (uses same AdminMaster layout) ── */}
