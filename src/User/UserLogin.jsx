@@ -202,7 +202,7 @@ export default function UserLogin() {
                                     {/* Button */}
                                     <div className="text-start">
                                         <button
-                                            className="inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
+                                            className="w-full inline-flex items-center justify-center !rounded-md bg-purple-900 px-16 py-3 text-white font-semibold shadow-sm hover:bg-purple-800 disabled:opacity-70"
                                             type="submit"
                                         >
                                             Login

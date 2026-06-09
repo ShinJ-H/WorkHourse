@@ -42,39 +42,7 @@ export const adminLogin = async (req, res) => {
 };
 
 // ================= UPDATE ADMIN AVATAR =================
-// Expects: multipart/form-data with field name: avatar
-// Upload middleware should set req.file
-// export const updateAdminAvatar = async (req, res) => {
-//   try {
-//     const adminId = req.params.id;
 
-//     if (!req.file) {
-//       return res.status(400).json({ message: "No avatar file provided" });
-//     }
-
-//     const updated = await Admin.findByIdAndUpdate(
-//       adminId,
-//       {
-//         avatar: {
-//           url: req.file.filename,
-//           public_id: req.file.filename
-//         }
-//       },
-//       { new: true }
-//     );
-
-//     if (!updated) {
-//       return res.status(404).json({ message: "Admin not found" });
-//     }
-
-//     return res.status(200).json({
-//       message: "Avatar updated",
-//       admin: updated,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// };
 export const updateAdminAvatar = async (req, res) => {
   try {
     const { name, email } = req.body;
@@ -113,12 +81,12 @@ export const updateAdminProfile = async (req, res) => {
       });
     }
 
-    admin.name = name || admin.name;
-    admin.email = email || admin.email;
+    admin.name = name;
+    admin.email = email;
 
-    const updatedAdmin = await admin.save();
+    await admin.save();
 
-    res.status(200).json(updatedAdmin);
+    res.status(200).json(admin);
 
   } catch (error) {
     res.status(500).json({

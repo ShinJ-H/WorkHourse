@@ -17,17 +17,13 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["Admin", "Manager", "User"],
+      enum: ["admin", "Manager", "User"],
       default: "User",
     },
     avatar: {
       url: String,
       public_id: String
     },
-    // 🔥 ADD BELOW YOUR EXISTING FIELDS
-    darkMode: { type: Boolean, default: false },
-    emailNotifications: { type: Boolean, default: true },
-    reminders: { type: Boolean, default: true },
   },
   {
     timestamps: true

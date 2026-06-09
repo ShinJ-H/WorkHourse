@@ -148,6 +148,7 @@ export default function ManagerTasks() {
 
   const deleteTask = async (id) => {
     try {
+      if (!window.confirm("Delete this task?")) return;
       await axios.delete(`${apiBase}/tasks/${id}`);
       alert("Task Deleted");
       fetchTasks();
@@ -241,8 +242,7 @@ export default function ManagerTasks() {
                 )}
 
                 <form className="p-4 p-md-5 rounded contact-form" onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label className="text-white">Task Title</label>
+                  <div className="mb-4 rounded-xl">
                     <input
                       className="form-control border-0 py-3"
                       type="text"
@@ -254,8 +254,7 @@ export default function ManagerTasks() {
                     />
                   </div>
 
-                  <div className="mb-4">
-                    <label className="text-white">Task Description</label>
+                  <div className="mb-4 rounded-xl">
                     <textarea
                       className="form-control border-0 py-3"
                       name="description"
@@ -266,8 +265,7 @@ export default function ManagerTasks() {
                     />
                   </div>
 
-                  <div className="mb-4">
-                    <label className="text-white">Select User</label>
+                  <div className="mb-4 rounded-xl">
                     <select
                       className="form-control border-0 py-3"
                       name="userId"
@@ -284,8 +282,7 @@ export default function ManagerTasks() {
                     </select>
                   </div>
 
-                  <div className="mb-4">
-                    <label className="text-white">Select Priority</label>
+                  <div className="mb-4 rounded-xl">
                     <select
                       className="form-control border-0 py-3"
                       name="priority"
@@ -300,8 +297,7 @@ export default function ManagerTasks() {
                     </select>
                   </div>
 
-                  <div className="mb-4">
-                    <label className="text-white">Start Date</label>
+                  <div className="mb-4 rounded-xl">
                     <input
                       type="date"
                       name="startDate"
@@ -312,8 +308,7 @@ export default function ManagerTasks() {
                     />
                   </div>
 
-                  <div className="mb-4">
-                    <label className="text-white">End Date</label>
+                  <div className="mb-4 rounded-xl">
                     <input
                       type="date"
                       name="endDate"
@@ -324,13 +319,29 @@ export default function ManagerTasks() {
                     />
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-4 rounded-xl">
                     <input key={fileKey} type="file" onChange={handleChangeFile} className="form-control border-0 py-3" />
-                    <small className="text-white-50">Upload file (optional when updating)</small>
                   </div>
 
                   <div className="text-start">
-                    <button className="btn bg-primary text-white py-3 px-5" type="submit">
+                    <button
+                      className="w-full inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-purple-900 to-fuchsia-700 px-16 py-3 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-purple-300 disabled:opacity-70"
+                      type="submit"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-5 h-5 mr-2"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 5v14" />
+                        <path d="M5 12h14" />
+                      </svg>
                       {editingId ? "Update Task" : "Assign Task"}
                     </button>
                   </div>
@@ -343,7 +354,7 @@ export default function ManagerTasks() {
 
       <div className="container-fluid py-5">
         <div className="container">
-          <h2 className="mb-4">All Assigned Tasks</h2>
+          <h2 className="mb-3">All Assigned Tasks</h2>
 
           {visibleTasks.length === 0 ? (
             <p className="text-center">No tasks found.</p>
@@ -364,10 +375,10 @@ export default function ManagerTasks() {
               const isImage = fileUrl ? /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(fileUrl) : false;
 
               return (
-                <div className="col-md-4 mb-4" key={task._id}>
-                  <div className="card shadow p-3 h-100">
-                    <h4>{task.title}</h4>
-                    <p>{task.description}</p>
+                <div className="col-md-4 mb-3" key={task._id}>
+                  <div className="card shadow p-3 h-100 mb-4">
+                    <h3>{task.title}</h3>
+                    <p className="text-2xl text-purple-900">{task.description}</p>
 
                     {/* ASSIGNED USER */}
                     {(() => {
@@ -380,26 +391,26 @@ export default function ManagerTasks() {
 
                       return (
                         <p>
-                          <strong>Assigned To:</strong> {assignedUser.name} ({assignedUser.email})
+                          <strong className="text-black">Assigned To:</strong> {assignedUser.name} ({assignedUser.email})
                         </p>
                       );
                     })()}
 
                     <p>
-                      <strong>Status:</strong> {task.status || ""}
+                      <strong className="text-black">Status:</strong> {task.status || ""}
                     </p>
 
 
                     <p>
-                      <strong>Priority:</strong> {task.priority}
+                      <strong className="text-black">Priority:</strong> {task.priority}
                     </p>
 
                     <p>
-                      <strong>Start Date:</strong> {task.startDate ? new Date(task.startDate).toLocaleDateString() : "N/A"}
+                      <strong className="text-black">Start Date:</strong> {task.startDate ? new Date(task.startDate).toLocaleDateString() : "N/A"}
                     </p>
 
                     <p>
-                      <strong>End Date:</strong> {task.endDate ? new Date(task.endDate).toLocaleDateString() : "N/A"}
+                      <strong className="text-black">End Date:</strong> {task.endDate ? new Date(task.endDate).toLocaleDateString() : "N/A"}
                     </p>
 
                     {fileUrl && (
@@ -409,7 +420,7 @@ export default function ManagerTasks() {
                           <img
                             src={fileUrl}
                             alt={task.file?.originalName || "Task file"}
-                            className="w-100"
+                            className="w-100 mb-4"
                             style={{ maxHeight: 140, objectFit: "cover", cursor: "pointer" }}
                             onClick={() => setModalImage(fileUrl)}
                             onError={(e) => {
@@ -424,11 +435,51 @@ export default function ManagerTasks() {
                       </div>
                     )}
 
-                    <div className="d-flex gap-2 mt-3">
-                      <button className="btn btn-warning btn-sm" onClick={() => editTask(task)}>
+                    {/* BUTTONS (like Notes.jsx) */}
+                    <div className="flex items-center gap-3 mt-4">
+                      <button
+                        className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                        onClick={() => editTask(task)}
+                        aria-label={`Edit ${task.title}`}
+                        type="button"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                        >
+                          <path d="M12 20h9" />
+                          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                        </svg>
                         Update
                       </button>
-                      <button className="btn btn-danger btn-sm" onClick={() => deleteTask(task._id)}>
+                      <button
+                        className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-red-600 to-rose-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-rose-300"
+                        onClick={() => deleteTask(task._id)}
+                        aria-label={`Delete ${task.title}`}
+                        type="button"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                        >
+                          <polyline points="3 6 5 6 21 6" />
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                          <path d="M10 11v6" />
+                          <path d="M14 11v6" />
+                          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                        </svg>
                         Delete
                       </button>
                     </div>
@@ -438,13 +489,25 @@ export default function ManagerTasks() {
             })}
 
               {visibleCount < tasksSorted.length && (
-                <div className="text-center mt-4">
+                <div className="text-center mt-6">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="group inline-flex items-center justify-center rounded-2xl px-8 py-3 bg-gradient-to-r from-purple-900 to-fuchsia-700 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-purple-300"
                     onClick={() => setVisibleCount((prev) => prev + 7)}
                   >
                     Show more
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4 ml-2 opacity-95 group-hover:opacity-100"
+                    >
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
                   </button>
                 </div>
               )}

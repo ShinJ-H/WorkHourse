@@ -70,11 +70,13 @@ export default function AboutUS() {
                 Innovative task & workflow management
               </h1>
               <p>
-                WorkHouse helps teams and individuals plan work, track progress, and finish tasks on time.
-                It keeps priorities clear, statuses updated, and everything organized in one place.
+                WorkHorse is designed to simplify task and workflow management for individuals and teams. Our platform helps
+                users organize tasks, set priorities, and track progress efficiently. With a focus on productivity and ease of use,
+                WorkHorse enables better collaboration and ensures that every task is completed on time.
               </p>
               <p className="">
-                Assign tasks, monitor deadlines, and stay aligned—so your workflow runs smoothly.
+                WorkHorse provides a structured and efficient way to manage tasks and workflows. It helps users stay organized,
+                prioritize work, and maintain consistency in completing tasks.
               </p>
 
               <button

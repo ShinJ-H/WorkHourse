@@ -41,6 +41,19 @@ export default function ManagerProjects() {
         if (["Low", "Medium", "High"].includes(status)) return status;
         return "Low";
     };
+
+    const getTeamMemberName = (member) => {
+        return (
+            member?.user?.name ||
+            member?.name ||
+            member?.user?.email ||
+            member?.email ||
+            member?.user?._id ||
+            member?._id ||
+            "Unknown"
+        );
+    };
+
     // FETCH PROJECTS
     const fetchProjects = async () => {
         try {
@@ -153,6 +166,7 @@ export default function ManagerProjects() {
     // DELETE PROJECT
     const deleteProject = async (id) => {
         try {
+            if (!window.confirm("Delete this project?")) return;
             await axios.delete(
                 `http://localhost:5000/api/projects/${id}`
             );
@@ -181,7 +195,7 @@ export default function ManagerProjects() {
             priority: projectPriority,
             team:
                 project.team?.map(
-                    (member) => member._id
+                    (member) => member.user?._id || member._id
                 ) || [],
             files: [],
         });
@@ -213,7 +227,7 @@ export default function ManagerProjects() {
             {/* Page Header End */}
             <div className="container mt-4">
                 {/* FORM */}
-                <div className="card shadow p-4 mb-5">
+                <div className="card shadow p-4 mb-5 mb-4">
                     <h2 className="mb-3">
                         {editingId
                             ? "Update Project"
@@ -225,34 +239,34 @@ export default function ManagerProjects() {
                             type="text"
                             name="title"
                             placeholder="Project Title"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.title}
                             onChange={handleChange}
                         />
                         <textarea
                             name="description"
                             placeholder="Project Description"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.description}
                             onChange={handleChange}
                         />
                         <input
                             type="date"
                             name="startDate"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.startDate}
                             onChange={handleChange}
                         />
                         <input
                             type="date"
                             name="endDate"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.endDate}
                             onChange={handleChange}
                         />
                         <input
                             type="file"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             multiple
                             onChange={(e) => {
                                 const selected =
@@ -268,7 +282,7 @@ export default function ManagerProjects() {
                         <label className="form-label">Priority</label>
                         <select
                             name="priority"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.priority}
                             onChange={handleChange}
                         >
@@ -279,7 +293,7 @@ export default function ManagerProjects() {
                         <label className="form-label">Status</label>
                         <select
                             name="status"
-                            className="form-control mb-3"
+                            className="form-control mb-4"
                             value={form.status}
                             onChange={handleChange}
                         >
@@ -359,14 +373,34 @@ export default function ManagerProjects() {
                             </ul>
                         </div>
                         <button
-                            className={`btn ${editingId
-                                ? "btn-warning"
-                                : "btn-primary"
-                                }`}
+                            type="submit"
+                            className={`group w-100 inline-flex items-center justify-center rounded-2xl px-6 py-3 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 ${
+                                editingId
+                                    ? "bg-gradient-to-r from-yellow-500 to-amber-600 focus:ring-yellow-300"
+                                    : "bg-gradient-to-r from-purple-900 to-fuchsia-700 focus:ring-purple-300"
+                            }`}
                         >
-                            {editingId
-                                ? "Update Project"
-                                : "Create Team Project"}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="w-5 h-5 mr-2 opacity-95 group-hover:opacity-100"
+                                aria-hidden="true"
+                            >
+                                {editingId ? (
+                                    <path d="M12 20h9" />
+                                ) : (
+                                    <>
+                                        <path d="M12 5v14" />
+                                        <path d="M5 12h14" />
+                                    </>
+                                )}
+                            </svg>
+                            {editingId ? "Update Project" : "Create Team Project"}
                         </button>
                     </form>
                 </div>
@@ -380,11 +414,11 @@ export default function ManagerProjects() {
                             className="col-md-4 mb-3"
                             key={project._id}
                         >
-                            <div className="card shadow p-3 h-100">
-                                <h4>
+                            <div className="card shadow p-3 h-100 mb-4">
+                                <h3>
                                     {project.title}
-                                </h4>
-                                <p>
+                                </h3>
+                                <p className="text-2xl text-purple-900">
                                     {project.description}
                                 </p>
                                 {/* STATUS + PRIORITY BADGE */}
@@ -446,7 +480,7 @@ export default function ManagerProjects() {
                                     })()
                                 }
                                 <p>
-                                    <strong>Start Date:</strong>{" "}
+                                    <strong className="text-black">Start Date:</strong>{" "}
                                     {project.startDate
                                         ? new Date(
                                             project.startDate
@@ -454,7 +488,7 @@ export default function ManagerProjects() {
                                         : "N/A"}
                                 </p>
                                 <p>
-                                    <strong>End Date:</strong>{" "}
+                                    <strong className="text-black">End Date:</strong>{" "}
                                     {project.endDate
                                         ? new Date(
                                             project.endDate
@@ -467,7 +501,7 @@ export default function ManagerProjects() {
                                         Files
                                     </h6>
                                     {project.files?.length ? (
-                                        <ul className="ps-3">
+                                        <ul className="ps-3 mb-4 rounded-xl">
                                             {project.files.map(
                                                 (f, idx) => {
                                                     const isImage =
@@ -527,32 +561,56 @@ export default function ManagerProjects() {
                                     {project.team?.map(
                                         (member) => (
                                             <li
-                                                key={member._id}
+                                                key={member.user?._id || member._id}
                                             >
-                                                {member.name}
-
+                                                {getTeamMemberName(member)}
                                             </li>
                                         )
                                     )}
                                 </ul>
-                                {/* BUTTONS */}
-                                <div className="d-flex gap-2 mt-3">
+                                {/* BUTTONS (like Notes.jsx) */}
+                                <div className="flex items-center gap-3 mt-4">
                                     <button
-                                        className="btn btn-warning btn-sm"
-                                        onClick={() =>
-                                            editProject(project)
-                                        }
+                                        className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                                        onClick={() => editProject(project)}
+                                        aria-label={`Edit ${project.title}`}
                                     >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                                        >
+                                            <path d="M12 20h9" />
+                                            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                                        </svg>
                                         Update
                                     </button>
                                     <button
-                                        className="btn btn-danger btn-sm"
-                                        onClick={() =>
-                                            deleteProject(
-                                                project._id
-                                            )
-                                        }
+                                        className="group inline-flex items-center justify-center rounded-xl px-4 py-2 bg-gradient-to-r from-red-600 to-rose-500 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-rose-300"
+                                        onClick={() => deleteProject(project._id)}
+                                        aria-label={`Delete ${project.title}`}
                                     >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="w-4 h-4 mr-2 opacity-95 group-hover:opacity-100"
+                                        >
+                                            <polyline points="3 6 5 6 21 6" />
+                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                            <path d="M10 11v6" />
+                                            <path d="M14 11v6" />
+                                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                                        </svg>
                                         Delete
                                     </button>
                                 </div>
@@ -560,6 +618,33 @@ export default function ManagerProjects() {
                         </div>
                     ))}
                 </div>
+                {/* Load More Projects */}
+                {projects.length > 9 && (
+                    <div className="text-center mt-6">
+                        <button
+                            type="button"
+                            className="group inline-flex items-center justify-center rounded-2xl px-8 py-3 bg-gradient-to-r from-purple-900 to-fuchsia-700 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-purple-300"
+                            onClick={() => {
+                                // simple fallback: reload all projects (current UI already renders all)
+                                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+                            }}
+                        >
+                            Show more
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="w-4 h-4 ml-2 opacity-95 group-hover:opacity-100"
+                            >
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </button>
+                    </div>
+                )}
             </div>
         </>
     );

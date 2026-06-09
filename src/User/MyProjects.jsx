@@ -12,6 +12,18 @@ const formatDate = (d) => {
   }
 };
 
+const getTeamMemberName = (member) => {
+  return (
+    member?.user?.name ||
+    member?.name ||
+    member?.user?.email ||
+    member?.email ||
+    member?.user?._id ||
+    member?._id ||
+    "Unknown"
+  );
+};
+
 export default function MyProjects() {
   const [projects, setProjects] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -313,7 +325,9 @@ export default function MyProjects() {
                       {Array.isArray(project.team) && project.team.length ? (
                         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600">
                           {project.team.slice(0, 3).map((member) => (
-                            <li key={member._id || member.id}>{member.name}</li>
+                            <li key={member.user?._id || member._id || member.id}>
+                              {getTeamMemberName(member)}
+                            </li>
                           ))}
                           {project.team.length > 3 && (
                             <li className="text-xs text-slate-500">
