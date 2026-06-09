@@ -6,7 +6,7 @@ export default function AssignTasks() {
   const { id } = useParams();
   const [editingId, setEditingId] = useState(null);
 
-  const apiBase = "http://localhost:5000/api";
+  const apiBase = "http://192.168.29.34:5000/api";
 
   const handlePrefillFromTask = (task) => {
     setEditingId(task?._id || task?.id || null);
@@ -17,6 +17,7 @@ export default function AssignTasks() {
       priority: task?.priority || "",
       startDate: task?.startDate ? String(task.startDate).split("T")[0] : "",
       endDate: task?.endDate ? String(task.endDate).split("T")[0] : "",
+      fileLink: task?.fileLink || "",
     });
     setFile(null);
     setPreview(null);
@@ -41,6 +42,7 @@ export default function AssignTasks() {
     priority: "",
     startDate: "",
     endDate: "",
+    fileLink: "",
   });
 
   const [file, setFile] = useState(null);
@@ -73,7 +75,7 @@ export default function AssignTasks() {
   // Fetch users + prefill task if editing
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get("http://localhost:5000/api/users");
+      const res = await axios.get("http://192.168.29.34:5000/api/users");
       setUsers(res.data);
     };
 
@@ -139,6 +141,7 @@ export default function AssignTasks() {
       priority: "",
       startDate: "",
       endDate: "",
+      fileLink: "",
     });
     setFile(null);
     setPreview(null);
@@ -158,7 +161,7 @@ export default function AssignTasks() {
         data.append("priority", formData.priority);
         data.append("startDate", formData.startDate);
         data.append("endDate", formData.endDate);
-
+        data.append("fileLink", formData.fileLink);
         if (file) {
           data.append("file", file);
         }
@@ -197,6 +200,7 @@ export default function AssignTasks() {
       data.append("priority", formData.priority);
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
+      data.append("fileLink", formData.fileLink);
 
       if (file) {
         data.append("file", file);
@@ -238,6 +242,7 @@ export default function AssignTasks() {
       priority: task.priority || "",
       startDate: task.startDate ? String(task.startDate).split("T")[0] : "",
       endDate: task.endDate ? String(task.endDate).split("T")[0] : "",
+      fileLink: task.fileLink || "",
     });
     setFile(null);
     setPreview(null);
@@ -407,6 +412,17 @@ export default function AssignTasks() {
                     <small className="text-white-50">Upload file (optional when updating)</small>
                   </div>
 
+                  <div className="mb-4 rounded-xl">
+                    <textarea
+                      className="form-control border-0 py-3"
+                      name="fileLink"
+                      placeholder="Task File Link (optional, if uploading file doesn't work)"
+                      value={formData.fileLink}
+                      onChange={handleChange}
+                      required={!editingId}
+                    />
+                  </div>
+
                   <div className="text-start">
                     <button
                       className="w-full inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-purple-900 to-fuchsia-700 px-16 py-3 text-white font-semibold shadow-sm hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-purple-300 disabled:opacity-70"
@@ -452,7 +468,7 @@ export default function AssignTasks() {
                     (typeof task?.file === "string"
                       ? task.file.startsWith("http")
                         ? task.file
-                        : `http://localhost:5000/uploads/${task.file}`
+                        : `http://192.168.29.34:5000/uploads/${task.file}`
                       : null);
 
                   const isImage = fileUrl ? /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(fileUrl) : false;
@@ -516,6 +532,9 @@ export default function AssignTasks() {
                           </div>
                         )}
 
+                        <strong>file Link</strong><a href={task.fileLink} className="text-lg text-black" target="_blank">Files Link</a>
+
+                      
                         {/* BUTTONS (like Notes.jsx) */}
                         <div className="flex items-center gap-3 mt-4">
                           <button

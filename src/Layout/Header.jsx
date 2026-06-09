@@ -92,7 +92,7 @@ export default function Header() {
 
     return (
         <>
-            <div className="container-fluid-nav">
+            <div className="container py-10">
 
                 <div className="container">
 

@@ -41,7 +41,7 @@ const Chat = () => {
       try {
         const token =currentUser?.token;
         const res = await axios.get(
-          "http://localhost:5000/api/users",
+          "http://192.168.29.34:5000/api/users",
           {
             headers: {
               Authorization:
@@ -132,7 +132,7 @@ const Chat = () => {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/messages/${currentUser._id}/${receiverId}`
+          `http://192.168.29.34:5000/api/messages/${currentUser._id}/${receiverId}`
         );
 
         setMessages(res.data);
@@ -170,7 +170,7 @@ const Chat = () => {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/messages",
+        "http://192.168.29.34:5000/api/messages",
         msgData
       );
 
@@ -290,7 +290,7 @@ const Chat = () => {
                     <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-xl font-semibold text-white ring-1 ring-white/10">
                       {u.profilePic ? (
                         <img
-                          src={`http://localhost:5000/uploads/${u.profilePic}`}
+                          src={`http://192.168.29.34:5000/uploads/${u.profilePic}`}
                           alt={u.name}
                           className="h-full w-full rounded-3xl object-cover"
                         />

@@ -461,7 +461,7 @@ export default function UpdateModal({
       }
 
       await axios.put(
-        `http://localhost:5000/api/tasks/${item?._id || item?.id}`,
+        `http://192.168.29.34:5000/api/tasks/${item?._id || item?.id}`,
         formData,
         {
           headers: {
@@ -481,7 +481,7 @@ export default function UpdateModal({
     else {
 
       await axios.put(
-        `http://localhost:5000/api/projects/member-status/${item?._id || item?.id}`,
+        `http://192.168.29.34:5000/api/projects/member-status/${item?._id || item?.id}`,
         {
           status:
             localStatus === "completed"

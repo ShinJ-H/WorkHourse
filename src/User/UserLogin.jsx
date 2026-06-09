@@ -34,7 +34,7 @@ export default function UserLogin() {
     try {
 
         const res = await axios.post(
-            "http://localhost:5000/api/users/login",
+            "http://192.168.29.34:5000/api/users/login",
             formData
         );
 

@@ -14,7 +14,7 @@ function TasksPreview() {
     const fetchTasks = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/api/tasks");
+        const res = await fetch("http://192.168.29.34:5000/api/tasks");
         const data = await res.json();
         if (!ignore) setTasks(Array.isArray(data) ? data : []);
       } catch {
@@ -96,7 +96,7 @@ export default function Home() {
     setSuccess("");
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/queries", form);
+      await axios.post("http://192.168.29.34:5000/api/queries", form);
       setForm({ name: "", email: "", project: "", message: "" });
       setSuccess("Message sent successfully.");
     } catch (err) {

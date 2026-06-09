@@ -10,7 +10,7 @@ const buildFileData = (file) => {
 
 export const createTask = async (req, res) => {
   try {
-    const { title, description, userId, priority, startDate, endDate } = req.body;
+    const { title, description, userId, priority, startDate, endDate, fileLink } = req.body;
 
     const task = await Task.create({
       title,
@@ -20,6 +20,7 @@ export const createTask = async (req, res) => {
       startDate,
       endDate,
       file: buildFileData(req.file),
+      fileLink,
     });
 
     res.status(201).json({
@@ -42,7 +43,7 @@ export const getTasks = async (req, res) => {
 
 export const updateTask = async (req, res) => {
   try {
-    const { title, description, userId, priority, startDate, endDate, status } = req.body;
+    const { title, description, userId, priority, startDate, endDate, status, fileLink } = req.body;
 
     const normalizeStatus = (s) => {
       if (s == null) return undefined;
@@ -65,6 +66,7 @@ export const updateTask = async (req, res) => {
       ...(startDate !== undefined ? { startDate } : {}),
       ...(endDate !== undefined ? { endDate } : {}),
       ...(status !== undefined ? { status: normalizeStatus(status) } : {}),
+      ...(fileLink !== undefined ? { fileLink } : {}),
     };
 
     // Only override file if a new one is uploaded

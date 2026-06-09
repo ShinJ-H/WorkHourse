@@ -104,7 +104,7 @@ export default function ChatBot() {
         setLoading(true);
 
         try {
-            const res = await axios.post("http://localhost:5000/api/chat", {
+            const res = await axios.post("http://192.168.29.34:5000/api/chat", {
                 messages: updatedMessages.map(m => m.text)
             });
 

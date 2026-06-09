@@ -4,7 +4,8 @@ li{
 }
 
 .container-fluid-nav{
-    background-color: rgb(210, 96, 255);
+    background-color: rgb(255, 255, 255);
+    padding: 7px 0;
 }
 
 .container-fluid-fact{

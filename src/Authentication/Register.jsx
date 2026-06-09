@@ -34,7 +34,7 @@ export default function Register() {
       if (file) data.append("avatar", file);
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "http://192.168.29.34:5000/api/auth/register",
         data,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

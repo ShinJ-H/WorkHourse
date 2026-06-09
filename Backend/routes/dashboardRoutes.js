@@ -11,7 +11,7 @@ const router = express.Router();
 // Admin Dashboard Stats
 router.get("/stats", getDashboardStats);
 
-// ✅ Status counts for admin/manager dashboards based on logged-in user
+// Status counts for admin/manager dashboards based on logged-in user
 router.get("/task-status", protect, getTaskStatusStats);
 router.get("/project-status", protect, getProjectStatusStats);
 

@@ -9,6 +9,7 @@ const taskSchema = new mongoose.Schema(
       enum: ["Pending", "In Progress", "Completed",],
       default: "Pending"
     },
+    fileLink: String,
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"

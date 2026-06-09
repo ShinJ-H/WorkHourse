@@ -15,7 +15,7 @@ const Notes = () => {
 
   // Fetch notes
   const fetchNotes = async () => {
-    const res = await axios.get("http://localhost:5000/api/notes");
+    const res = await axios.get("http://192.168.29.34:5000/api/notes");
     setNotes(res.data);
   };
 
@@ -33,7 +33,7 @@ const Notes = () => {
     formData.append("content", content);
     if (image) formData.append("image", image);
 
-    await axios.post("http://localhost:5000/api/notes", formData, {
+    await axios.post("http://192.168.29.34:5000/api/notes", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
@@ -49,7 +49,7 @@ const Notes = () => {
     if (!window.confirm("Delete this note?")) return;
 
 
-    await axios.delete(`http://localhost:5000/api/notes/${id}`);
+    await axios.delete(`http://192.168.29.34:5000/api/notes/${id}`);
     fetchNotes();
   };
 
@@ -67,7 +67,7 @@ const Notes = () => {
     formData.append("content", editContent);
     if (editImage) formData.append("image", editImage);
 
-    await axios.put(`http://localhost:5000/api/notes/${id}`, formData);
+    await axios.put(`http://192.168.29.34:5000/api/notes/${id}`, formData);
 
     setEditingId(null);
     setEditImage(null);
@@ -194,10 +194,10 @@ const Notes = () => {
                 >
                   {note.image && (
                     <img
-                      src={`http://localhost:5000/uploads/${note.image}`}
+                      src={`http://192.168.29.34:5000/uploads/${note.image}`}
                       alt=""
                       onClick={() =>
-                        setSelectedImage(`http://localhost:5000/uploads/${note.image}`)
+                        setSelectedImage(`http://192.168.29.34:5000/uploads/${note.image}`)
                       }
                       className="w-full h-48 object-cover cursor-pointer hover:scale-105 transition"
                     />
