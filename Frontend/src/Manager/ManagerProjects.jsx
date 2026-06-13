@@ -58,7 +58,7 @@ export default function ManagerProjects() {
     const fetchProjects = async () => {
         try {
             const res = await axios.get(
-                "http://192.168.29.34:5000/api/projects"
+                "/api/projects"
             );
             setProjects(res.data.projects || []);
         } catch (error) {
@@ -69,7 +69,7 @@ export default function ManagerProjects() {
     const fetchUsers = async () => {
         try {
             const res = await axios.get(
-                "http://192.168.29.34:5000/api/users"
+                "/api/users"
             );
             setUsers(
                 Array.isArray(res.data.users)
@@ -119,7 +119,7 @@ export default function ManagerProjects() {
             // UPDATE
             if (editingId) {
                 await axios.put(
-                    `http://192.168.29.34:5000/api/projects/${editingId}`,
+                    `/api/projects/${editingId}`,
                     payload,
                     {
                         headers: {
@@ -134,7 +134,7 @@ export default function ManagerProjects() {
             // CREATE
             else {
                 await axios.post(
-                    "http://192.168.29.34:5000/api/projects/create",
+                    "/api/projects/create",
                     payload,
                     {
                         headers: {
@@ -168,7 +168,7 @@ export default function ManagerProjects() {
         try {
             if (!window.confirm("Delete this project?")) return;
             await axios.delete(
-                `http://192.168.29.34:5000/api/projects/${id}`
+                `/api/projects/${id}`
             );
             alert("Project Deleted");
             window.dispatchEvent(new Event("projectUpdated"));

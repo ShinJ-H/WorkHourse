@@ -49,7 +49,7 @@ export default function ManagerStatusTables() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://192.168.29.34:5000/api/dashboard/task-status",
+        "/api/dashboard/task-status",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ export default function ManagerStatusTables() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://192.168.29.34:5000/api/dashboard/project-status",
+        "/api/dashboard/project-status",
         {
           headers: {
             Authorization: `Bearer ${token}`,

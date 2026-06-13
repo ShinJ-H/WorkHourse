@@ -49,7 +49,7 @@ export default function MyProjects() {
 
     try {
       const res = await axios.get(
-        `http://192.168.29.34:5000/api/projects/user/${user._id}`
+        `/api/projects/user/${user._id}`
       );
 
       setProjects(

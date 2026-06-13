@@ -24,15 +24,15 @@ export default function ManagerDashboard() {
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      const usersRes = await axios.get("http://192.168.29.34:5000/api/users", {
+      const usersRes = await axios.get("/api/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const tasksRes = await axios.get("http://192.168.29.34:5000/api/tasks", {
+      const tasksRes = await axios.get("/api/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const projectsRes = await axios.get("http://192.168.29.34:5000/api/projects", {
+      const projectsRes = await axios.get("/api/projects", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

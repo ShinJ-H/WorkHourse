@@ -7,14 +7,12 @@ export default function Queries() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const apiBase = "http://192.168.29.34:5000";
-
   useEffect(() => {
     const fetchQueries = async () => {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get(`${apiBase}/api/queries`);
+        const res = await axios.get(`/api/queries`);
         setQueries(res.data || []);
       } catch (err) {
         setError(
@@ -40,7 +38,7 @@ export default function Queries() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this query?")) return;
-    await axios.delete(`${apiBase}/api/queries/${id}`);
+    await axios.delete(`/api/queries/${id}`);
     setQueries((prev) => prev.filter((q) => q._id !== id));
   };
 

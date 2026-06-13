@@ -8,7 +8,7 @@ export default function AdminProfile() {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState("");
 
-    const BASE_URL = "http://192.168.29.34:5000/api";
+    const BASE_URL = "/api";
 
     const getToken = () => {
         try {
@@ -180,7 +180,7 @@ export default function AdminProfile() {
                         src={
                             preview ||
                             (user.avatar?.url
-                                ? `http://192.168.29.34:5000/uploads/${user.avatar.url}`
+                                ? `/uploads/${user.avatar.url}`
                                 : "/default-avatar.png")
                         }
                         className="w-24 h-24 rounded-full object-cover border"

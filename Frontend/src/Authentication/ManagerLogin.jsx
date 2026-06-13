@@ -29,7 +29,7 @@ export default function ManagerLogin() {
 
         try {
             const res = await axios.post(
-                "http://192.168.29.34:5000/api/manager/login",
+                "/api/manager/login",
                 formData
             );
 

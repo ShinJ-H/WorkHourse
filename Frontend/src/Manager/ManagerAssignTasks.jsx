@@ -36,7 +36,7 @@ export default function ManagerTasks() {
 
   const [visibleCount, setVisibleCount] = useState(7);
 
-  const apiBase = "http://192.168.29.34:5000/api";
+  const apiBase = "/api";
 
   const fetchTasks = async () => {
     try {
@@ -368,7 +368,7 @@ export default function ManagerTasks() {
                   (typeof task?.file === "string"
                     ? task.file.startsWith("http")
                       ? task.file
-                      : `http://192.168.29.34:5000/uploads/${task.file}`
+                      : `/uploads/${task.file}`
                     : null) ||
                   null;
 

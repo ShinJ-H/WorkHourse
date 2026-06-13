@@ -87,7 +87,7 @@ export default function Header() {
         null;
 
     const avatarSrc = avatarFileName
-        ? `http://192.168.29.34:5000/uploads/${avatarFileName}`
+        ? `/uploads/${avatarFileName}`
         : `https://ui-avatars.com/api/?name=${user?.name}`;
 
     return (

@@ -46,7 +46,7 @@ function getAvatarFileName(user) {
 function getAvatarSrc(user) {
     const avatarFileName = getAvatarFileName(user);
     if (avatarFileName) {
-        return `http://192.168.29.34:5000/uploads/${avatarFileName}`;
+        return `/uploads/${avatarFileName}`;
     }
 
     const name = user?.name || "U";

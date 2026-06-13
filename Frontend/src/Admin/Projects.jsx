@@ -64,7 +64,7 @@ export default function Projects() {
   // FETCH PROJECTS
   const fetchProjects = async () => {
     try {
-      const res = await axios.get("http://192.168.29.34:5000/api/projects");
+      const res = await axios.get("/api/projects");
       setProjects(res.data.projects || []);
     } catch (error) {
       console.log(error);
@@ -74,7 +74,7 @@ export default function Projects() {
   // FETCH USERS
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://192.168.29.34:5000/api/users");
+      const res = await axios.get("/api/users");
       setUsers(
         Array.isArray(res.data.users)
           ? res.data.users
@@ -96,7 +96,7 @@ export default function Projects() {
       setEditingId(id);
       (async () => {
         try {
-          const res = await axios.get(`http://192.168.29.34:5000/api/projects/${id}`);
+          const res = await axios.get(`/api/projects/${id}`);
           const project = res.data?.project || res.data;
           editProject(project);
         } catch (error) {
@@ -140,7 +140,7 @@ export default function Projects() {
       // UPDATE
       if (editingId) {
         await axios.put(
-          `http://192.168.29.34:5000/api/projects/${editingId}`,
+          `/api/projects/${editingId}`,
           payload,
           {
             headers: {
@@ -154,7 +154,7 @@ export default function Projects() {
       } else {
         // CREATE
         await axios.post(
-          "http://192.168.29.34:5000/api/projects/create",
+          "/api/projects/create",
           payload,
           {
             headers: {
@@ -188,7 +188,7 @@ export default function Projects() {
   // DELETE PROJECT
   const deleteProject = async (id) => {
     try {
-      await axios.delete(`http://192.168.29.34:5000/api/projects/${id}`);
+      await axios.delete(`/api/projects/${id}`);
       alert("Project Deleted");
       window.dispatchEvent(new Event("projectUpdated"));
       fetchProjects();

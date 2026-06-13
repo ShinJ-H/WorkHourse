@@ -11,7 +11,7 @@ export default function Users() {
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      const res = await axios.get("http://192.168.29.34:5000/api/users", {
+      const res = await axios.get("/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -23,7 +23,7 @@ export default function Dashboard() {
       try {
         const token = localStorage.getItem("adminToken");
         const res = await axios.get(
-          "http://192.168.29.34:5000/api/dashboard/stats",
+          "/api/dashboard/stats",
           {
             headers: {
               Authorization: `Bearer ${token}`,

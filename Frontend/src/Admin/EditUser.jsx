@@ -24,7 +24,7 @@ export default function EditUser() {
       const fetchUser = async () => {
 
          const res = await axios.get(
-            "http://192.168.29.34:5000/api/users"
+            "/api/users"
          );
 
          const user = res.data.find(
@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
    try {
 
       const res = await axios.put(
-         `http://192.168.29.34:5000/api/users/update/${id}`,
+         `/api/users/update/${id}`,
          formData
       );
 

@@ -6,7 +6,7 @@ export default function AssignTasks() {
   const { id } = useParams();
   const [editingId, setEditingId] = useState(null);
 
-  const apiBase = "http://192.168.29.34:5000/api";
+  const apiBase = "/api";
 
   const handlePrefillFromTask = (task) => {
     setEditingId(task?._id || task?.id || null);
@@ -75,7 +75,7 @@ export default function AssignTasks() {
   // Fetch users + prefill task if editing
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get("http://192.168.29.34:5000/api/users");
+      const res = await axios.get("/api/users");
       setUsers(res.data);
     };
 
@@ -468,7 +468,7 @@ export default function AssignTasks() {
                     (typeof task?.file === "string"
                       ? task.file.startsWith("http")
                         ? task.file
-                        : `http://192.168.29.34:5000/uploads/${task.file}`
+                        : `/uploads/${task.file}`
                       : null);
 
                   const isImage = fileUrl ? /\.(jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(fileUrl) : false;

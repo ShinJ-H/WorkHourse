@@ -27,7 +27,7 @@ const Tasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://192.168.29.34:5000/api/tasks");
+      const res = await axios.get("/api/tasks");
       setTasks(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.log(err);

@@ -29,7 +29,7 @@ export default function ContactUs() {
       // NOTE: this endpoint must exist in backend.
       // If you haven't created it yet, add a POST /api/contactus (or /api/queries)
       // that saves the message into the Queries table/collection.
-      await axios.post("http://192.168.29.34:5000/api/queries", form);
+      await axios.post("/api/queries", form);
 
       setForm({ name: "", email: "", project: "", message: "" });
       setSuccess("Message sent successfully.");

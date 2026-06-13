@@ -11,7 +11,7 @@ export default function Users() {
   // Fetch users
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://192.168.29.34:5000/api/users");
+      const res = await axios.get("/api/users");
       setUsers(res.data);
     } catch (err) {
       console.log(err);
@@ -25,7 +25,7 @@ export default function Users() {
   // Delete user
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://192.168.29.34:5000/api/users/${id}`);
+      await axios.delete(`/api/users/${id}`);
       fetchUsers(); // refresh list
     } catch (err) {
       console.log(err);
