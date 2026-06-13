@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { RingLoader } from "react-spinners";
 
 function TasksPreview() {
   const [tasks, setTasks] = useState([]);
@@ -35,7 +35,10 @@ function TasksPreview() {
   return (
     <div>
       {loading ? (
-        <div className="text-center py-4">Loading...</div>
+        <div className="flex items-center justify-center py-8 gap-3">
+          <RingLoader color="#7c3aed" size={48} speedMultiplier={0.8} aria-label="Loading tasks" />
+          <span className="text-gray-600 font-medium">Loading tasks...</span>
+        </div>
       ) : visibleTasks.length === 0 ? (
         <div className="text-center py-4 text-muted">No tasks found.</div>
       ) : (
@@ -84,6 +87,8 @@ export default function Home() {
   const [success, setSuccess] = useState("");
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
+
 
 
   const onChange = (e) => {
@@ -120,13 +125,35 @@ export default function Home() {
     readUser();
     window.addEventListener("userChanged", readUser);
     window.addEventListener("storage", readUser);
+
+    // Hide scrollbar during loading
+    document.body.style.overflow = "hidden";
+
+    // 3 seconds loader delay
+    const t = setTimeout(() => {
+      setPageLoading(false);
+      // Restore scrollbar after loading
+      document.body.style.overflow = "auto";
+    }, 3000);
+
     return () => {
+      window.clearTimeout(t);
       window.removeEventListener("userChanged", readUser);
       window.removeEventListener("storage", readUser);
+      document.body.style.overflow = "auto";
     };
   }, []);
 
   const isLoggedIn = !!user;
+
+  if (pageLoading) {
+    return (
+      <div className="w-screen h-screen flex flex-col items-center justify-center bg-white gap-7">
+        <RingLoader color="#7c3aed" size={80} speedMultiplier={0.8} aria-label="Loading" />
+        <p className="text-gray-600 font-medium text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <>

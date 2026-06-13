@@ -1,11 +1,6 @@
-# TODO
-
-- [ ] Rewrite `src/User/Notes.jsx` using consistent Tailwind CSS styling.
-- [x] Fix Add Note form submission handler (currently incorrectly calls delete).
-- [x] Implement missing create handler (POST `/api/notes`) with optional image upload.
-- [ ] Improve UX: loading/disabled states for create/update/delete.
-- [ ] Ensure edit/save/cancel flow works with Tailwind UI.
-- [x] Keep image preview modal working.
-- [ ] Smoke-test via running the Vite app and verifying CRUD for notes.
-
+- [ ] Inspect existing spinner implementation (done via Home.jsx)
+- [ ] Add RingLoader spinner + loading state to src/User/UserLogin.jsx (color #7c3aed, size 80, speedMultiplier 0.8; show during login)
+- [ ] Disable Login button while loading and switch button content to spinner
+- [ ] Ensure navigation timing still uses existing setTimeout(1000)
+- [ ] (Optional) Run build/dev to verify no import/runtime issues
 

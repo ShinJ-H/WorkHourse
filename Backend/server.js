@@ -68,17 +68,22 @@ io.on("connection", (socket) => {
       const receiverSocket =
         users[receiverId];
 
-      if (receiverSocket) {
+      const payload = {
+        senderId,
+        receiverId,
+        message,
+      };
 
+      // Send the message to the receiver if they are online
+      if (receiverSocket) {
         io.to(receiverSocket).emit(
           "receiveMessage",
-          {
-            senderId,
-            receiverId,
-            message,
-          }
+          payload
         );
       }
+
+      // Also send the message back to the sender so their UI updates immediately
+      socket.emit("receiveMessage", payload);
     }
   );
 

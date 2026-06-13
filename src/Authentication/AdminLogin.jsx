@@ -29,7 +29,11 @@ export default function AdminLogin() {
 
         try {
             const res = await axios.post(
+<<<<<<< Updated upstream
                 "http://localhost:5000/api/admin/login",
+=======
+                "http://loaclhost:5000/api/admin/login",
+>>>>>>> Stashed changes
                 formData
             );
 
