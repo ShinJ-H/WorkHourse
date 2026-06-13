@@ -139,7 +139,7 @@ export default function Header() {
 
                                 <Link
                                     to={"/"}
-                                    className="nav-item nav-link active text-secondary"
+                                    className="nav-item nav-link active"
                                 >
                                     Home
                                 </Link>
